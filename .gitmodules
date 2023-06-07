@@ -1,0 +1,36 @@
+[submodule "Drivers/CMSIS/Device/ST/STM32H5xx"]
+	path = Drivers/CMSIS/Device/ST/STM32H5xx
+	url = https://github.com/STMicroelectronics/cmsis_device_h5.git
+	branch = main
+[submodule "Drivers/BSP/STM32H5xx_Nucleo"]
+	path = Drivers/BSP/STM32H5xx_Nucleo
+	url = https://github.com/STMicroelectronics/stm32h5xx-nucleo-bsp.git
+	branch = main
+[submodule "Drivers/BSP/Components/Common"]
+	path = Drivers/BSP/Components/Common
+	url = https://github.com/STMicroelectronics/stm32-bsp-common.git
+	branch = main
+[submodule "Drivers/BSP/Components/lan8742"]
+	path = Drivers/BSP/Components/lan8742
+	url = https://github.com/STMicroelectronics/stm32-lan8742.git
+	branch = main
+[submodule "Middlewares/Third_Party/LwIP"]
+	path = Middlewares/Third_Party/LwIP
+	url = https://github.com/STMicroelectronics/stm32_mw_lwip.git
+	branch = master
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_device.git
+	branch = master
+[submodule "Middlewares/ST/STM32_USB_Host_Library"]
+	path = Middlewares/ST/STM32_USB_Host_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_host.git
+	branch = master
+[submodule "Drivers/STM32H5xx_HAL_Driver"]
+	path = Drivers/STM32H5xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32h5xx_hal_driver.git
+	branch = main
+[submodule "Middlewares/Third_Party/FatFs"]
+	path = Middlewares/Third_Party/FatFs
+	url = https://github.com/STMicroelectronics/stm32_mw_fatfs.git
+	branch = master
