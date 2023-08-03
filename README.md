@@ -12,6 +12,10 @@
 * ST's proprietary stacks: ST USB Device and ST USB Host
 * Third parties' stacks: FreeRTOS, FatFS, and LwIP
 
+#### *Note*
+
+ * *FreeRTOS* Middleware and examples are delivered on STM32H5 in the form of X-CUBE-FREERTOS that is available from [st.com](https://www.st.com/en/embedded-software/x-cube-freertos.html), from [GitHub](https://github.com/STMicroelectronics/x-cube-freertos) and from STM32CubeMX.
+
 This package is **exclusively** published on GitHub (and is neither available in STM32CubeMX nor STM32CubeIDE available on www.st.com). 
 It contains the integration of the Classic CoreMW stacks with *STM32H5* devices, allowing users to get quick access to pre-built projects integrating them.
 
@@ -32,7 +36,7 @@ LwIP	      | LwIP_TCP_Echo_Server		       | This application guides STM32Cube HA
 LwIP	      | LwIP_UDP_Echo_Server               | This application guides STM32Cube HAL API users to run UDP Echo Server application based on Raw API of LwIP TCP/IP stack
 
 #### *Note*
- * *FreeRTOS* Middleware and examples are delivered on STM32H5 in the form of X-CUBE-FREERTOS that is available from [st.com](https://www.st.com/en/embedded-software/x-cube-freertos.html), from [GitHub](https://github.com/STMicroelectronics/x-cube-freertos) and from STM32CubeMX.
+
  * All examples are provided **only** with pre-configured projects for *EWARM* toolchain.
  * Projects in this package have not been generated with STM32CubeMX (**i.e.**, no `.ioc` files are delivered).
 
