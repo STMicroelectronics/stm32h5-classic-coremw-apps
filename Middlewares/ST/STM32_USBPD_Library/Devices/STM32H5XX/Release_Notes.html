@@ -21,7 +21,8 @@
 <div class="row">
 <div class="col-sm-12 col-lg-4">
 <center>
-<h1 id="release-notes-for-stm32-usb-c-power-delivery-h5-device-driver">Release Notes for STM32 USB-C Power Delivery H5 Device Driver</h1>
+<h1 id="release-notes-for">Release Notes for</h1>
+<h1 id="stm32-usb-c-power-delivery-h5-device-driver"><mark>STM32 USB-C Power Delivery H5 Device Driver</mark></h1>
 <p>Copyright © 2022 STMicroelectronics<br />
 </p>
 <a href="https://www.st.com" class="logo"><img src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
@@ -38,7 +39,7 @@
 <div class="col-sm-12 col-lg-8">
 <h1 id="update-history">Update History</h1>
 <div class="collapse">
-<input type="checkbox" id="collapse-section3" checked aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.1.1 / 21-Oct-2022</label>
+<input type="checkbox" id="collapse-section4" checked aria-hidden="true"> <label for="collapse-section4" aria-hidden="true">V1.3.0 / 17-April-2024</label>
 <div>
 <h2 id="main-changes">Main Changes</h2>
 <h3 id="maintenance-release">Maintenance release</h3>
@@ -52,7 +53,19 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>Codespell corrections</td>
+<td>Astyle &amp; codespell corrections</td>
+</tr>
+<tr class="even">
+<td>Add protection of DMA init function if using the “no-pd” lib</td>
+</tr>
+<tr class="odd">
+<td>Add DMA secure configuration in case of secure application</td>
+</tr>
+<tr class="even">
+<td>Remove the now always supported “USBPD_REV30_SUPPORT” compilation switch</td>
+</tr>
+<tr class="odd">
+<td>Modify timing for low power DRP</td>
 </tr>
 </tbody>
 </table>
@@ -66,7 +79,7 @@
 <li>STM32CubeIDE v1.8.0</li>
 </ul>
 <h2 id="supported-devices-and-boards">Supported Devices and boards</h2>
-<p>All STM32H5xx devices embedding USBPD IP</p>
+<p>All STM32H5xx devices embedding UCPD IP</p>
 <h2 id="backward-compatibility">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
 <h2 id="dependencies">Dependencies</h2>
@@ -74,11 +87,59 @@
 </div>
 </div>
 <div class="collapse">
-<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 13-Apr-2022</label>
+<input type="checkbox" id="collapse-section3" aria-hidden="true"> <label for="collapse-section3" aria-hidden="true">V1.2.0 / 24-Jan-2023</label>
 <div>
 <h2 id="main-changes-1">Main Changes</h2>
 <h3 id="maintenance-release-1">Maintenance release</h3>
 <h2 id="contents-1">Contents</h2>
+<p><strong>Fixed bugs list</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Headline</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fix wrong definition of #define UCPDFRS_INSTANCE0_FRSCC2 in usbpd_devices_conf_template.h</td>
+</tr>
+<tr class="even">
+<td>Low Power implementation on USBPD SRC applications</td>
+</tr>
+<tr class="odd">
+<td>Implementation of new UCPD software trimming procedure</td>
+</tr>
+<tr class="even">
+<td>Implementation of OCP recovery procedure</td>
+</tr>
+<tr class="odd">
+<td>Prevent a risk of collision between RX goodCRC in interrupt context and TX message in task context.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">Known limitations</h2>
+<p>Outstanding bugs list : None</p>
+<p>Requirements not met or planned in a forthcoming release : None</p>
+<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1</li>
+<li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.31</li>
+<li>STM32CubeIDE v1.8.0</li>
+</ul>
+<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
+<p>All STM32H5xx devices embedding UCPD IP</p>
+<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<p>No compatibility break with previous version</p>
+<h2 id="dependencies-1">Dependencies</h2>
+<p>This software release is compatible with USB-C Power Delivery Core Stack Library v4.1.0</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="true"> <label for="collapse-section2" aria-hidden="true">V1.1.0 / 13-Apr-2022</label>
+<div>
+<h2 id="main-changes-2">Main Changes</h2>
+<h3 id="maintenance-release-2">Maintenance release</h3>
+<h2 id="contents-2">Contents</h2>
 <p><strong>Fixed bugs list</strong></p>
 <table>
 <thead>
@@ -95,29 +156,29 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-1">Known limitations</h2>
+<h2 id="known-limitations-2">Known limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-1">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.31</li>
 <li>STM32CubeIDE v1.8.0</li>
 </ul>
-<h2 id="supported-devices-and-boards-1">Supported Devices and boards</h2>
-<p>All STM32H5xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-1">Backward compatibility</h2>
+<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
+<p>All STM32H5xx devices embedding UCPD IP</p>
+<h2 id="backward-compatibility-2">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies-1">Dependencies</h2>
+<h2 id="dependencies-2">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v4.1.0</p>
 </div>
 </div>
 <div class="collapse">
 <input type="checkbox" id="collapse-section1" aria-hidden="true"> <label for="collapse-section1" aria-hidden="true">V1.0.0 / 02-Mar-2022</label>
 <div>
-<h2 id="main-changes-2">Main Changes</h2>
+<h2 id="main-changes-3">Main Changes</h2>
 <h3 id="initial-release">Initial release</h3>
-<h2 id="contents-2">Contents</h2>
+<h2 id="contents-3">Contents</h2>
 <p><strong>Fixed bugs list</strong></p>
 <table>
 <thead>
@@ -131,20 +192,20 @@
 </tr>
 </tbody>
 </table>
-<h2 id="known-limitations-2">Known limitations</h2>
+<h2 id="known-limitations-3">Known limitations</h2>
 <p>Outstanding bugs list : None</p>
 <p>Requirements not met or planned in a forthcoming release : None</p>
-<h2 id="development-toolchains-and-compilers-2">Development Toolchains and Compilers</h2>
+<h2 id="development-toolchains-and-compilers-3">Development Toolchains and Compilers</h2>
 <ul>
 <li>IAR Embedded Workbench for ARM (EWARM) toolchain V9.20.1</li>
 <li>RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.31</li>
 <li>STM32CubeIDE v1.8.0</li>
 </ul>
-<h2 id="supported-devices-and-boards-2">Supported Devices and boards</h2>
-<p>All STM32H5xx devices embedding USBPD IP</p>
-<h2 id="backward-compatibility-2">Backward compatibility</h2>
+<h2 id="supported-devices-and-boards-3">Supported Devices and boards</h2>
+<p>All STM32H5xx devices embedding UCPD IP</p>
+<h2 id="backward-compatibility-3">Backward compatibility</h2>
 <p>No compatibility break with previous version</p>
-<h2 id="dependencies-2">Dependencies</h2>
+<h2 id="dependencies-3">Dependencies</h2>
 <p>This software release is compatible with USB-C Power Delivery Core Stack Library v4.1.0</p>
 </div>
 </div>

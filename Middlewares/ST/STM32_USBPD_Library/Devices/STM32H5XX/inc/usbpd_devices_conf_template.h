@@ -33,7 +33,13 @@ extern "C" {
 #include "stm32h5xx_ll_tim.h"
 
 /* Following include file may be replaced with the BSP UBSPD PWR header file */
-#warning "Update for the series"
+#if defined(USE_STM32H5XX_NUCLEO)
+#include "stm32h5xx_nucleo_usbpd_pwr.h"
+#elif defined(USE_STM32H573I_DK)
+#include "stm32h573i_discovery_usbpd_pwr.h"
+#else
+#include "usbpd_bsp_pwr.h"
+#endif /* USE_STM32H5XX_NUCLEO */
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
@@ -44,10 +50,10 @@ extern "C" {
       usbpd_hw.c
 -------------------------------------------------------------------------------*/
 
-/* defined used to configure function : USBPD_HW_GetUSPDInstance */
+/* Define used to configure function : USBPD_HW_GetUSPDInstance */
 #define UCPD_INSTANCE0 UCPD1
 
-/* defined used to configure function : USBPD_HW_Init_DMARxInstance,USBPD_HW_DeInit_DMARxInstance */
+/* Define used to configure function : USBPD_HW_Init_DMARxInstance,USBPD_HW_DeInit_DMARxInstance */
 #define UCPDDMA_INSTANCE0_CLOCKENABLE_RX  \
   do                                      \
   {                                       \
@@ -62,7 +68,7 @@ extern "C" {
 
 #define UCPDDMA_INSTANCE0_CHANNEL_RX   GPDMA1_Channel5
 
-/* defined used to configure function : USBPD_HW_Init_DMATxInstance, USBPD_HW_DeInit_DMATxInstance */
+/* Define used to configure function : USBPD_HW_Init_DMATxInstance, USBPD_HW_DeInit_DMATxInstance */
 #define UCPDDMA_INSTANCE0_CLOCKENABLE_TX  \
   do                                      \
   {                                       \
@@ -81,18 +87,12 @@ extern "C" {
 #define UCPDFRS_INSTANCE0_FRSCC1                                                      \
   do                                                                                  \
   {                                                                                   \
-    LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);                                                       \
-    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_10, LL_GPIO_MODE_ALTERNATE);          \
-    LL_GPIO_SetAFPin_0_7(GPIOA, LL_GPIO_PIN_10, LL_GPIO_AF_6);   \
+    LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOA);                              \
+    LL_GPIO_SetPinMode(GPIOA, LL_GPIO_PIN_10, LL_GPIO_MODE_ALTERNATE);                \
+    LL_GPIO_SetAFPin_8_15(GPIOA, LL_GPIO_PIN_10, LL_GPIO_AF_6);                       \
   } while(0)
 
-#define UCPDFRS_INSTANCE0_FRSCC2                                                      \
-  do                                                                                  \
-  {                                                                                   \
-    LL_AHB2_GRP1_EnableClock(LL_AHB2_GRP1_PERIPH_GPIOB);                                                       \
-    LL_GPIO_SetPinMode(GPIOB, LL_GPIO_PIN_12, LL_GPIO_MODE_ALTERNATE);          \
-    LL_GPIO_SetAFPin_0_7(GPIOB, LL_GPIO_PIN_12, LL_GPIO_AF_6);   \
-  } while(0)
+#define UCPDFRS_INSTANCE0_FRSCC2    UCPDFRS_INSTANCE0_FRSCC1 /* Only one common FRSCC pin is available on this series */
 
 #define UCPD_INSTANCE0_ENABLEIRQ               \
   do                                           \

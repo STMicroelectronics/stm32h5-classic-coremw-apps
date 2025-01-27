@@ -214,13 +214,14 @@
                 <debug>1</debug>
                 <option>
                     <name>CCDefines</name>
-                    <state>USE_HAL_DRIVER</state>
                     <state>STM32H563xx</state>
+                    <state>USE_HAL_DRIVER</state>
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>USBPDCORE_LIB_NO_PD</state>
                     <state>USBPD_TYPE_STATE_MACHINE</state>
                     <state>USBPD_PORT_COUNT=1</state>
                     <state>_SNK</state>
+                    <state>USBD_LPM_SLEEP_CONFIG</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -1193,6 +1194,9 @@
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_lptim.c</name>

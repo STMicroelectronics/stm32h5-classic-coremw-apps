@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -40,9 +40,9 @@ extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 static void GetPointerData(uint8_t *pbuf);
+extern void SystemClockConfig_Resume(void);
 /* USER CODE END PFP */
 
-extern void Error_Handler(void);
 /* USB Device Core handle declaration. */
 USBD_HandleTypeDef hUsbDeviceFS;
 extern USBD_DescriptorsTypeDef HID_Desc;
@@ -99,7 +99,7 @@ void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin)
     {
       if ((&hpcd_USB_DRD_FS)->Init.low_power_enable)
       {
-        HAL_ResumeTick();
+        SystemClockConfig_Resume();
       }
       /* Activate Remote wakeup */
       HAL_PCD_ActivateRemoteWakeup((&hpcd_USB_DRD_FS));
@@ -142,21 +142,17 @@ void MX_USB_Device_Init(void)
   /* USER CODE END USB_Device_Init_PreTreatment */
 
   /* Init Device Library, add supported class and start the library. */
-  if (USBD_Init(&hUsbDeviceFS, &HID_Desc, 0) != USBD_OK) {
+  if (USBD_Init(&hUsbDeviceFS, &HID_Desc, 0) != USBD_OK)
+  {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_HID) != USBD_OK) {
+  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_HID) != USBD_OK)
+  {
     Error_Handler();
   }
   /* USER CODE BEGIN USB_Device_Init_PostTreatment */
 
   /* USER CODE END USB_Device_Init_PostTreatment */
-  
-
-
-  HAL_PWREx_EnableVddUSB();
-
-
 
 }
 

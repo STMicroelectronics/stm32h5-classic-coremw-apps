@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -57,7 +57,7 @@
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
 extern HCD_HandleTypeDef hhcd;
-extern ADC_HandleTypeDef hadc1;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -174,36 +174,19 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 
-
-
-/**
-  * @brief This function handles GPDMA1 Channel 1 global interrupt.
-  */
-void GPDMA1_Channel1_IRQHandler(void)
-{
-  /* USER CODE BEGIN GPDMA1_Channel1_IRQn 0 */
-
-  /* USER CODE END GPDMA1_Channel1_IRQn 0 */
-    HAL_DMA_IRQHandler(hadc1.DMA_Handle);
-  /* USER CODE BEGIN GPDMA1_Channel1_IRQn 1 */
-
-  /* USER CODE END GPDMA1_Channel1_IRQn 1 */
-}
-
-
-
 /**
   * @brief This function handles USB low priority interrupt remap.
   */
 void UCPD1_IRQHandler(void)
 {
-  /* USER CODE BEGIN USB_UCPD1_2_IRQn 0 */
-  USBPD_PORT0_IRQHandler();
-  /* USER CODE END USB_UCPD1_2_IRQn 0 */
-  HAL_PCD_IRQHandler(&hpcd_USB_DRD_FS);
-  /* USER CODE BEGIN USB_UCPD1_2_IRQn 1 */
+  /* USER CODE BEGIN UCPD1_IRQn 0 */
 
-  /* USER CODE END USB_UCPD1_2_IRQn 1 */
+  /* USER CODE END UCPD1_IRQn 0 */
+  USBPD_PORT0_IRQHandler();
+
+  /* USER CODE BEGIN UCPD1_IRQn 1 */
+
+  /* USER CODE END UCPD1_IRQn 1 */
 }
 
 

@@ -1,0 +1,24 @@
+#Ignore modules added by the repo script
+*.bak
+*.o
+*.d
+*.htm
+*.dep
+**/*.log
+**/EWARM/*/
+**/EWARM8/*/
+**/EWARM/*.dep
+**/EWARM/*.ewt
+**/EWARM/*.out
+**/EWARM/settings/
+**/MDK-ARM/*/
+**/MDK-ARM/*.lst
+**/MDK-ARM/*.out
+**/MDK-ARM/*vguix.*
+**/SW4STM32/.metadata
+**/SW4STM32/**/*.out
+**/SW4STM32/**/Debug/
+**/SW4STM32/**/Doc/
+**/SW4STM32/**/Drivers/
+**/SW4STM32/**/Example/
+**/SW4STM32/**/.settings/

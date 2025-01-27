@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -36,11 +36,7 @@
 /* USER CODE BEGIN INCLUDE */
 
 /* USER CODE END INCLUDE */
-   
-/** @defgroup USBD_CONF USBD_CONF
-  * @brief Configuration file for Usb otg low level driver.
-  * @{
-  */
+
 
 /** @defgroup USBD_CONF_Exported_Variables USBD_CONF_Exported_Variables
   * @brief Public variables.

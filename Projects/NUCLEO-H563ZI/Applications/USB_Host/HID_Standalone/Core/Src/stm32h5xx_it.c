@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -55,7 +55,7 @@
 /* External variables --------------------------------------------------------*/
 
 extern HCD_HandleTypeDef hhcd;
-extern ADC_HandleTypeDef hadc1;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -171,16 +171,6 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief  This function handles DMA interrupt request.
-* @param  None
-* @retval None
-*/
-void GPDMA1_Channel1_IRQHandler(void)
-{
-  HAL_DMA_IRQHandler(hadc1.DMA_Handle);
-}
-
-/**
   * @brief This function handles USB low priority interrupt remap.
   */
 
@@ -193,7 +183,7 @@ void USB_DRD_FS_IRQHandler(void)
   /* USER CODE BEGIN USB_DRD_FS_IRQn 0 */
 
   /* USER CODE END USB_DRD_FS_IRQn 0 */
-	HAL_HCD_IRQHandler(&hhcd);
+  HAL_HCD_IRQHandler(&hhcd);
   /* USER CODE BEGIN USB_DRD_FS_IRQn 1 */
 
   /* USER CODE END USB_DRD_FS_IRQn 1 */

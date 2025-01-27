@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_UDP_Echo_Server/Src/udp_echoserver.c
+  * @file    LwIP/LwIP_UDP_Echo_Server/LWIP/App/udp_echoserver.c
   * @author  MCD Application Team
-  * @brief   UDP echo server
+  * @brief   UDP echo server application using LwIP RAW API
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -43,16 +43,16 @@ void udp_echoserver_init(void)
 {
    struct udp_pcb *upcb;
    err_t err;
-   
+
    /* Create a new UDP control block  */
    upcb = udp_new();
-   
+
    if (upcb)
    {
      /* Bind the upcb to the UDP_PORT port */
      /* Using IP_ADDR_ANY allow the upcb to be used by any local interface */
       err = udp_bind(upcb, IP_ADDR_ANY, UDP_SERVER_PORT);
-      
+
       if(err == ERR_OK)
       {
         /* Set a receive callback for the upcb */
@@ -77,22 +77,22 @@ void udp_echoserver_init(void)
 void udp_echoserver_receive_callback(void *arg, struct udp_pcb *upcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
   struct pbuf *p_tx;
-  
+
   /* allocate pbuf from RAM*/
   p_tx = pbuf_alloc(PBUF_TRANSPORT,p->len, PBUF_RAM);
-  
+
   if(p_tx != NULL)
   {
     pbuf_take(p_tx, (char*)p->payload, p->len);
     /* Connect to the remote client */
     udp_connect(upcb, addr, UDP_CLIENT_PORT);
-    
+
     /* Tell the client that we have accepted it */
     udp_send(upcb, p_tx);
-    
+
     /* free the UDP connection, so we can accept new clients */
     udp_disconnect(upcb);
-    
+
     /* Free the p_tx buffer */
     pbuf_free(p_tx);
 

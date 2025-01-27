@@ -345,13 +345,11 @@
                     <state>$PROJ_DIR$/../FATFS/App</state>
                     <state>$PROJ_DIR$/../Core/Inc</state>
                     <state>$PROJ_DIR$/../../../../../../Drivers/STM32H5xx_HAL_Driver/Inc</state>
-                    <state>$PROJ_DIR$/../../../../../../Middlewares/Third_Party/FatFs/src</state>
                     <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32H5xx/Include</state>
                     <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
                     <state>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32H5xx_Nucleo</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Adafruit_Shield</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Components</state>
-                    <state>$PROJ_DIR$/../../../../../../Drivers/BSP/Components/Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\drivers\sram</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1097,12 +1095,6 @@
                         <name>$PROJ_DIR$\..\FATFS\App\app_fatfs.c</name>
                     </file>
                 </group>
-                <group>
-                    <name>Target</name>
-                    <file>
-                        <name>$PROJ_DIR$\..\FATFS\Target\sram_diskio.c</name>
-                    </file>
-                </group>
             </group>
         </group>
     </group>
@@ -1156,6 +1148,9 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gpio.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_pwr.c</name>
             </file>
             <file>
@@ -1186,6 +1181,9 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart_ex.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_icache.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_rcc.c</name>
             </file>
         </group>
@@ -1194,18 +1192,30 @@
         <name>Middlewares</name>
         <group>
             <name>FatFs</name>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\src\diskio.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\src\ff.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\src\ff_gen_drv.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\src\option\syscall.c</name>
-            </file>
+            <group>
+                <name>Core</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\diskio.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\ff.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\ff_gen_drv.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\ffsystem_baremetal.c</name>
+                </file>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\ffunicode.c</name>
+                </file>
+            </group>
+            <group>
+                <name>Drivers</name>
+                <file>
+                    <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FatFs\source\drivers\sram\sram_diskio.c</name>
+                </file>
+            </group>
         </group>
     </group>
 </project>

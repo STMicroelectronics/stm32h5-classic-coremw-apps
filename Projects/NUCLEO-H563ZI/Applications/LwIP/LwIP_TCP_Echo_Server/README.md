@@ -13,25 +13,43 @@ where:
     the following static IP address is used: 192.168.0.10
     /p transport layer protocol used for communication (TCP)
     /r is the actual remote port on the echo server (echo port)
+    /l is the actual local port for the client (echo port)
     /n is the number of echo requests (for application, 15)
     /t is the connection timeout in seconds (for application, 2)
     /d is the message to be sent for echo
 
-LEDs will inform user about ethernet cable status:
- + LD2: ethernet cable is connected.
- + LD3: ethernet cable is not connected.
-
 If a DHCP server is available, a dynamic IP address can be allocated by enabling
-the DHCP process (#define LWIP_DHCP to 1 in lwipopts.h), in this case the allocated
-address could be read from "gnetif.ip_addr" field:
-For example if gnetif.ip_addr.addr = 0x0200A8C0, so the the IPv4 address is "192.168.0.2"
+the DHCP process (#define LWIP_DHCP to 1 in lwipopts.h)
+The user will be notified about the application status with the LEDs and state
+messages printed on the HyperTerminal.
 
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
-(SYSCLK) to run at 240 MHz.
+(SYSCLK) to run at 250 MHz.
 
-#### Notes 
+#### Expected success behavior
+   - The board's IP address is printed on the HyperTerminal
+   - LED_YELLOW is ON indicating the ethernet cable is connected.
+   - If the echotool utility is used the state of the replies sent by the TCP server are displayed on the PC console.
+
+#### Error behaviors
+   - LED_RED is ON indicating the ethernet cable is not connected.
+   - LED_RED is toggling to indicate a critical error has occured.
+   - The error message is printed on the HyperTerminal.
+
+#### Assumptions if any
+   - If the Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in
+   the LAN used to test the application.
+   - The application is configuring the Ethernet IP with a static predefined MAC Address, make sure to change it in case
+   multiple boards are connected on the same LAN to avoid any potential network traffic issues.
+   - The MAC Address is defined in the stm32h5xx_hal_conf.h
+
+#### Known limitations
+None
+
+
+#### Notes
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -41,7 +59,8 @@ Then the SystemClock_Config() function is used to configure the system clock
  2. The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
-For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications"
+
+For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications
 
 ### Keywords
 
@@ -49,20 +68,20 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo server, UART,
 
 ### Directory contents
 
-  - LwIP/LwIP_TCP_Echo_Server/Inc/app_ethernet.h          header of app_ethernet.c file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/ethernetif.h            header for ethernetif.c file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_hal_conf.h    HAL configuration file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/main.h                  Main program header file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/lwipopts.h              LwIP stack configuration options
-  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_nucleo_conf.h NUCLEO-H563ZI configuration file
-  - LwIP/LwIP_TCP_Echo_Server/Inc/tcp_echoserver.h        Header for tcp echoserver application
-  - LwIP/LwIP_TCP_Echo_Server/Src/app_ethernet.c          Ethernet specific module
-  - LwIP/LwIP_TCP_Echo_Server/Src/stm32h5xx_it.c          STM32 interrupt handlers
-  - LwIP/LwIP_TCP_Echo_Server/Src/main.c                  Main program
-  - LwIP/LwIP_TCP_Echo_Server/Src/system_stm32h5xx.c      STM32H5xx system clock configuration file
-  - LwIP/LwIP_TCP_Echo_Server/Src/ethernetif.c            Interfacing LwIP to ETH driver
-  - LwIP/LwIP_TCP_Echo_Server/Src/tcp_echoserver.c        tcp echoserver application
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/App/app_ethernet.h         header of app_ethernet.c file
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/Target/ethernetif.h        header for ethernetif.c file
+  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_hal_conf.h        HAL configuration file
+  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_it.h              STM32 interrupt handlers header file
+  - LwIP/LwIP_TCP_Echo_Server/Inc/main.h                      Main program header file
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/Target/lwipopts.h          LwIP stack configuration options
+  - LwIP/LwIP_TCP_Echo_Server/Inc/stm32h5xx_nucleo_conf.h     NUCLEO-H563ZI configuration file
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/App/tcp_echoserver.h       Header for tcp echoserver application
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/App/app_ethernet.c         Ethernet specific module
+  - LwIP/LwIP_TCP_Echo_Server/Src/stm32h5xx_it.c              STM32 interrupt handlers
+  - LwIP/LwIP_TCP_Echo_Server/Src/main.c                      Main program
+  - LwIP/LwIP_TCP_Echo_Server/Src/system_stm32h5xx.c          STM32H5xx system clock configuration file
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/Target/ethernetif.c        Interfacing LwIP to ETH driver
+  - LwIP/LwIP_TCP_Echo_Server/LWIP/App/tcp_echoserver.c       tcp echoserver application
 
 
 ### Hardware and Software environment
@@ -70,7 +89,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo server, UART,
   - This application runs on STM32H563xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H563ZI board
+     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
      - echotool: (http://bansky.net/echotool/) is used as echo client that sends
        data to the server and checking whether they came back
      - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
@@ -93,7 +112,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo server, UART,
 ### How to use it ?
 
 In order to make the program work, you must do the following :
+
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application
- 

@@ -4,11 +4,11 @@
   * @file    FatFs/FatFs_RAMDISK_Standalone/Core/Src/main.c
   * @author  MCD Application Team
   * @brief   Main program body
-  *          This sample code shows how to use FatFs with uSD card drive.
+  *          This sample code shows how to use FatFs with RAM disk drive.
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -24,39 +24,20 @@
 
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
 /* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
 /* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
 /* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
 /* Private variables ---------------------------------------------------------*/
-
-
-/* USER CODE BEGIN PV */
 __IO int32_t ProcessStatus = 0;
-/* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
+static void SystemClock_Config(void);
+static void BSP_Config(void);
+static void GPIO_Init(void);
+static void CACHE_Enable(void);
+static void Success_Handler(void);
+static void Error_Handler(void);
 
-/* USER CODE BEGIN PFP */
-void Success_Handler(void);
-/* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -69,43 +50,30 @@ void Success_Handler(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-
-  /* USER CODE END 1 */
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-  
   /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
+  /* Enable the CPU Cache */
+  CACHE_Enable();
 
-  
-  /* USER CODE END SysInit */
-  BSP_LED_Init(LED1);
-  BSP_LED_Init(LED3);
+  /* Configure the LEDs ...*/
+  BSP_Config();
+
   /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  if (MX_FATFS_Init() != APP_OK) {
+  GPIO_Init();
+  if (FATFS_Init() != APP_OK) {
     Error_Handler();
   }
-  /* USER CODE BEGIN 2 */
-
-  /* USER CODE END 2 */
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-    ProcessStatus = MX_FATFS_Process();
+    ProcessStatus = FATFS_Process();
     /* Call middleware background task */
     if (ProcessStatus == APP_ERROR)
     {
@@ -115,114 +83,114 @@ int main(void)
     {
       Success_Handler();
     }
-
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
+}
+
+static void BSP_Config(void)
+{
+  BSP_LED_Init(LED_GREEN);
+  BSP_LED_Init(LED_RED);
 }
 
 /**
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
+static void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  /** Configure the main internal regulator output voltage
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  /* The voltage scaling allows optimizing the power consumption when the device is
+  clocked below the maximum system frequency, to update the voltage scaling value
+  regarding system frequency refer to product datasheet.
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
-
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
-
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  /* Enable HSE Bypass and activate PLL with HSE as source */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS_DIGITAL;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 60;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 250;
   RCC_OscInitStruct.PLL.PLLP = 2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
-  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLLVCIRANGE_3;
-  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
   RCC_OscInitStruct.PLL.PLLFRACN = 0;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_1;
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
+    /* Initialization Error */
     Error_Handler();
   }
-
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
-                              |RCC_CLOCKTYPE_PCLK3;
+  /* Select PLL as system clock source and configure the HCLK, PCLK1, PCLK2 and PCLK3
+     clocks dividers */
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2| RCC_CLOCKTYPE_PCLK3);
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
-
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  {
+    /* Initialization Error */
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief ICACHE Initialization Function
+  * @param None
+  * @retval None
+  */
+static void CACHE_Enable(void)
+{
+  /* Enable I-Cache */
+    if (HAL_ICACHE_Enable() != HAL_OK)
   {
     Error_Handler();
   }
-  HAL_RCC_MCOConfig(RCC_MCO1, RCC_MCO1SOURCE_HSI, RCC_MCODIV_1);
 }
-
-
 
 /**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
   */
-static void MX_GPIO_Init(void)
+static void GPIO_Init(void)
 {
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
-
 }
-
-/* USER CODE BEGIN 4 */
-
 
 /**
   * @brief  This function is executed in case of success.
   * @retval None
   */
-void Success_Handler(void)
+static void Success_Handler(void)
 {
   while(1)
   {
-    BSP_LED_Toggle(LED1);
+    BSP_LED_Toggle(LED_GREEN);
     HAL_Delay(200);
   }
 }
-/* USER CODE END 4 */
+
 
 /**
   * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
-void Error_Handler(void)
+static void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  BSP_LED_Off(LED1);
-  BSP_LED_On(LED3);
+  /* User may add here some code to deal with this error */
+  BSP_LED_Off(LED_GREEN);
   while(1)
   {
+    BSP_LED_Toggle(LED_RED);
+    HAL_Delay(200);
   }
-  /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT

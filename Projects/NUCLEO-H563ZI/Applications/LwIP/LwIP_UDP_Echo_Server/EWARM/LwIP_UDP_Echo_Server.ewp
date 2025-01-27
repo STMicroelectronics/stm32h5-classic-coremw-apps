@@ -217,6 +217,7 @@
                     <state>USE_FULL_LL_DRIVER</state>
                     <state>USE_HAL_DRIVER</state>
                     <state>STM32H563xx</state>
+                    <state>USE_STM32H5XX_NUCLEO</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>
@@ -348,6 +349,8 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\LwIP\system</state>
                     <state>$PROJ_DIR$\..\LWIP\App</state>
                     <state>$PROJ_DIR$\..\LWIP\Target</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\Components\Common</state>
+                    <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\BSP\Components\lan8742</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1176,12 +1179,6 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_gpio.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_i2c_ex.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_icache.c</name>
             </file>
             <file>
@@ -1197,16 +1194,31 @@
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_rcc_ex.c</name>
             </file>
             <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim.c</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_tim_ex.c</name>
-            </file>
-            <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_hal_uart_ex.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_dma.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_exti.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_gpio.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_rcc.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_ucpd.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_usb.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\..\..\..\..\..\Drivers\STM32H5xx_HAL_Driver\Src\stm32h5xx_ll_utils.c</name>
             </file>
         </group>
     </group>

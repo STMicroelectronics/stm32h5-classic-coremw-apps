@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -22,6 +22,7 @@
 /* USER CODE BEGIN Includes */
 #include "stm32h5xx_hal.h"
 #include "usbh_core.h"
+#include "main.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -33,7 +34,6 @@
 
 /* USER CODE END PV */
 HCD_HandleTypeDef hhcd;
-extern void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
@@ -60,52 +60,44 @@ USBH_StatusTypeDef USBH_Get_USB_Status(HAL_StatusTypeDef hal_status);
   * @retval None
   */
 void HAL_HCD_MspInit(HCD_HandleTypeDef * hhcd)
-{  
-	  GPIO_InitTypeDef GPIO_InitStruct = {0};
-	  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-	  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-	  if(hhcd->Instance==USB_DRD_FS)
-	  {
-	    /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
+{
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-	    /* USER CODE END USB_DRD_FS_MspInit 0 */
+  if(hhcd->Instance==USB_DRD_FS)
+  {
+    /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
 
-	    /** Initializes the peripherals clock
-	    */
-		RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
-		RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-		if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-		    {
-		      Error_Handler();
-		    }
-	    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
-	    PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
-	    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-	    {
-	      Error_Handler();
-	    }
-	    __HAL_RCC_USB_CLK_ENABLE();
+    /* USER CODE END USB_DRD_FS_MspInit 0 */
 
-	    __HAL_RCC_GPIOA_CLK_ENABLE();
-	    /**USB_DRD_FS GPIO Configuration
-	    PA12     ------> USB_DRD_FS_DP
-	    PA11     ------> USB_DRD_FS_DM
-	    */
-	    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_11;
-	    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	    GPIO_InitStruct.Alternate = GPIO_AF10_USB;
-	    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
+    PeriphClkInit.PLL3.PLL3Source = RCC_PLL3_SOURCE_HSE;
+    PeriphClkInit.PLL3.PLL3M = 4;
+    PeriphClkInit.PLL3.PLL3N = 96;
+    PeriphClkInit.PLL3.PLL3P = 2;
+    PeriphClkInit.PLL3.PLL3Q = 4;
+    PeriphClkInit.PLL3.PLL3R = 2;
+    PeriphClkInit.PLL3.PLL3RGE = RCC_PLL3_VCIRANGE_3;
+    PeriphClkInit.PLL3.PLL3VCOSEL = RCC_PLL3_VCORANGE_WIDE;
+    PeriphClkInit.PLL3.PLL3FRACN = 0;
+    PeriphClkInit.PLL3.PLL3ClockOut = RCC_PLL3_DIVQ;
+    PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_PLL3Q;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
+    /* Enable VDDUSB */
+    HAL_PWREx_EnableVddUSB();
 
-	    /* USB_DRD_FS interrupt Init */
-	    HAL_NVIC_SetPriority(USB_DRD_FS_IRQn, 3, 0);
-	    HAL_NVIC_EnableIRQ(USB_DRD_FS_IRQn);
-	    /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */
+    __HAL_RCC_USB_CLK_ENABLE();
 
-	    /* USER CODE END USB_DRD_FS_MspInit 1 */
-	  }
+    /* USB_DRD_FS interrupt Init */
+    HAL_NVIC_SetPriority(USB_DRD_FS_IRQn, 3, 0);
+    HAL_NVIC_EnableIRQ(USB_DRD_FS_IRQn);
+    /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */
+
+    /* USER CODE END USB_DRD_FS_MspInit 1 */
+  }
 }
 
 /**
@@ -115,24 +107,18 @@ void HAL_HCD_MspInit(HCD_HandleTypeDef * hhcd)
   */
 void HAL_HCD_MspDeInit(HCD_HandleTypeDef * hhcd)
 {
-	  if(hhcd->Instance==USB_DRD_FS)
-	  {
-	    /* USER CODE BEGIN USB_DRD_FS_MspDeInit 0 */
+  if(hhcd->Instance==USB_DRD_FS)
+  {
+    /* USER CODE BEGIN USB_DRD_FS_MspDeInit 0 */
 
-	    /* USER CODE END USB_DRD_FS_MspDeInit 0 */
+    /* USER CODE END USB_DRD_FS_MspDeInit 0 */
 
-	    /**USB_DRD_FS GPIO Configuration
-	    PA12     ------> USB_DRD_FS_DP
-	    PA11     ------> USB_DRD_FS_DM
-	    */
-	    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_12|GPIO_PIN_11);
+    /* USB_DRD_FS interrupt DeInit */
+    HAL_NVIC_DisableIRQ(USB_DRD_FS_IRQn);
+    /* USER CODE BEGIN USB_DRD_FS_MspDeInit 1 */
 
-	    /* USB_DRD_FS interrupt DeInit */
-	    HAL_NVIC_DisableIRQ(USB_DRD_FS_IRQn);
-	    /* USER CODE BEGIN USB_DRD_FS_MspDeInit 1 */
-
-	    /* USER CODE END USB_DRD_FS_MspDeInit 1 */
-	  }
+    /* USER CODE END USB_DRD_FS_MspDeInit 1 */
+  }
 }
 
 /**
@@ -232,7 +218,7 @@ USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef * phost)
   {
     Error_Handler( );
   }
-  
+
   USBH_LL_SetTimer(phost, HAL_HCD_GetCurrentFrame(&hhcd));
 
   return USBH_OK;
@@ -247,11 +233,11 @@ USBH_StatusTypeDef USBH_LL_DeInit(USBH_HandleTypeDef * phost)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
   hal_status = HAL_HCD_DeInit(phost->pData);
-  
+
   usb_status = USBH_Get_USB_Status(hal_status);
-  
+
   return usb_status;
 }
 
@@ -264,11 +250,11 @@ USBH_StatusTypeDef USBH_LL_Start(USBH_HandleTypeDef * phost)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
   hal_status = HAL_HCD_Start(phost->pData);
-  
+
   usb_status = USBH_Get_USB_Status(hal_status);
-  
+
   return usb_status;
 }
 
@@ -281,11 +267,11 @@ USBH_StatusTypeDef USBH_LL_Stop(USBH_HandleTypeDef * phost)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
   hal_status = HAL_HCD_Stop(phost->pData);
-  
+
   usb_status = USBH_Get_USB_Status(hal_status);
-  
+
   return usb_status;
 }
 
@@ -367,11 +353,11 @@ USBH_StatusTypeDef USBH_LL_OpenPipe(USBH_HandleTypeDef * phost,
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
   hal_status = HAL_HCD_HC_Init(phost->pData, pipe, epnum, dev_address, speed, ep_type, mps);
- 
-  usb_status = USBH_Get_USB_Status(hal_status); 
-  
+
+  usb_status = USBH_Get_USB_Status(hal_status);
+
   return usb_status;
 }
 
@@ -385,11 +371,11 @@ USBH_StatusTypeDef USBH_LL_ClosePipe(USBH_HandleTypeDef * phost, uint8_t pipe)
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
   hal_status = HAL_HCD_Stop(phost->pData);
-  
+
   usb_status = USBH_Get_USB_Status(hal_status);
-  
+
   return usb_status;
 }
 
@@ -430,7 +416,7 @@ USBH_StatusTypeDef USBH_LL_SubmitURB(USBH_HandleTypeDef * phost,
 {
   HAL_StatusTypeDef hal_status = HAL_OK;
   USBH_StatusTypeDef usb_status = USBH_OK;
-  
+
     hal_status = HAL_HCD_HC_SubmitRequest(phost->pData, pipe, direction,
                                           ep_type, token, pbuff, length,
                                           do_ping);
@@ -473,7 +459,7 @@ USBH_StatusTypeDef USBH_LL_DriverVBUS(USBH_HandleTypeDef * phost, uint8_t state)
   /* USER CODE BEGIN 0 */
 
   /* USER CODE END 0*/
-  
+
     if(state != TRUE)
     {
       /* Drive Low Charge pump */
@@ -531,7 +517,7 @@ uint8_t USBH_LL_GetToggle(USBH_HandleTypeDef * phost, uint8_t pipe)
   {
     toggle = hhcd.hc[pipe].toggle_out;
   }
-  
+
   return toggle;
 }
 

@@ -7,24 +7,29 @@ enumerated as a HID device using the native PC Host HID driver to which the NUCL
 board is connected, in order to emulate the Mouse directions using User push-button mounted on the
 NUCLEO-H563ZI board.
 
-At the beginning of the main program the HAL_Init() function is called to reset all the peripherals, 
-initialize the Flash interface and the systick. The user is provided with the SystemClock_Config() function 
+At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
+initialize the Flash interface and the systick. The user is provided with the SystemClock_Config() function
 to configure the clock (SYSCLK).
 
-This example supports remote wakeup (which is the ability of a USB device to bring a suspended bus back
-to the active condition), and the User push-button is used as the remote wakeup source.
+#### <b>Expected success behavior</b>
 
-By default, in Windows powered PC the Power Management feature of USB mouse devices is turned off.
-This setting is different from classic PS/2 computer functionality. Therefore, to enable the Wake from
-standby option, user must manually turn on the Power Management feature for the USB mouse.
+When plugged to PC host, the NUCLEO-H563ZI must be properly enumerated as a USB HID mouse device.
+During the enumeration phase, device provides host with the requested descriptors (device, configuration, string).
+Those descriptors are used by host driver to identify the device capabilities.
+Once the NUCLEO-H563ZI USB device successfully completed the enumeration phase, the device sends an HID report after a user button press.
+Each report sent should move the mouse cursor by one step on host side.
 
-To manually enable the wake from standby option for the USB mouse, proceed as follows:
- - Start "Device Manager",
- - Select "Mice and other pointing devices",
- - Select the "HID-compliant mouse" device (make sure that PID & VID are equal to 0x5710 & 0x0483 respectively)
- - Right click and select "Properties",
- - Select "Power Management" tab,
- - Finally click to select "Allow this device to wake the computer" check box.
+#### <b>Error behaviors</b>
+
+  - LED_RED is toggling to indicate a critical error has occured.
+
+#### <b>Assumptions if any</b>
+
+User is familiar with USB 2.0 "Universal Serial BUS" specification and HID class specification.
+
+#### <b>Known limitations</b>
+
+None
 
 #### Notes
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -43,30 +48,12 @@ For more details about the STM32Cube USB Device library, please refer to UM1734
 
 Connectivity, USB_Device, USB, HID, Full Speed, Mouse, Remote Wakeup
 
-### Directory contents
-
-  - USB_Device/HID_Standalone/Core/Src/main.c                     Main program
-  - USB_Device/HID_Standalone/Core/Src/stm32h5xx_hal_msp.c        MSP Initialization and de-Initialization codes
-  - USB_Device/HID_Standalone/Core/Src/system_stm32h5xx.c         STM32H5xx system clock configuration file
-  - USB_Device/HID_Standalone/Core/Src/stm32h5xx_it.c             Interrupt handlers
-  - USB_Device/HID_Standalone/USB_Device/Target/usbd_conf.c       General low level driver configuration
-  - USB_Device/HID_Standalone/USB_Device/App/usbd_desc.c          USB device HID descriptor
-  - USB_Device/HID_Standalone/USB_Device/App/usbd_device.c        USB Device
-  - USB_Device/HID_Standalone/Core/Inc/main.h                     Main program header file
-  - USB_Device/HID_Standalone/Core/Inc/stm32h5xx_it.h             Interrupt handlers header file
-  - USB_Device/HID_Standalone/Core/Inc/stm32h5xx_hal_conf.h       HAL configuration file
-  - USB_Device/HID_Standalone/USB_Device/Target/usbd_conf.h       USB device driver Configuration file
-  - USB_Device/HID_Standalone/USB_Device/App/usbd_desc.h          USB device HID descriptor header file
-  - USB_Device/HID_Standalone/USB_Device/App/usbd_device.h        USB Device header
-  - USB_Host/MSC_Standalone/USB-PD/Target/usbpd_devices_conf.h    UCPD device configuration file
-  - USB_Host/MSC_Standalone/USB-PD/Target/usbpd_dpm_conf.h        UCPD stack configuration file
-
 
 ### Hardware and Software environment
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
     and can be easily tailored to any other supported device and development board.
 
   - NUCLEO-H563ZI board Set-up
@@ -78,6 +65,7 @@ Connectivity, USB_Device, USB, HID, Full Speed, Mouse, Remote Wakeup
 ### How to use it ?
 
 In order to make the program work, you must do the following :
+
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application

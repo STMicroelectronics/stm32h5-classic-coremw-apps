@@ -8,15 +8,37 @@ HID Device such as a Mouse or a Keyboard.
 
 At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
 initialize the Flash interface and the systick. The user is provided with the SystemClock_Config()
-function to configure the system clock (SYSCLK). The Full Speed (FS) USB module uses
-internally a 48-MHz clock, which is generated from an HSI48.
+function to configure the system clock (SYSCLK).
+The Full Speed (FS) USB module uses a 48-MHz clock, which is generated from HSE.
 
-When the application is started, the connected HID device (Mouse/Keyboard) is detected in HID mode and 
-gets initialized. This application is based on interacting with a HID device (Mouse/Keyboard) through a HID routine.
+#### <b>Expected success behavior</b>
 
-The STM32 MCU behaves as a HID Host, it enumerates the device and extracts VID, PID, 
-manufacturer name, Serial number and product name information and displays it on The UART Hyperterminal.
+When a HID device is plugged to NUCLEO-H563ZI board, a message will be displayed on the UART HyperTerminal showing
+the Vendor ID and Product ID of the attached device.
+After enumeration phase, a message will indicate that the device is ready for use.
+The host must be able to properly decode HID reports sent by the corresponding device and display those information on the HyperTerminal.
 
+The received HID reports are used by host to identify:
+- in case of a mouse
+   - (x,y) mouse position
+   - Wheel position
+   - Pressed mouse buttons
+
+- in case of a keyboard
+   - Pressed key
+
+#### <b>Error behaviors</b>
+
+  - Errors are detected (such as unsupported device, enumeration fail) and the corresponding message is displayed on the HyperTerminal.
+  - LED_RED is toggling to indicate a critical error has occured.
+
+#### <b>Assumptions if any</b>
+
+User is familiar with USB 2.0 "Universal Serial BUS" specification and HID class specification.
+
+#### <b>Known limitations</b>
+
+None
 
 #### Notes
 1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
@@ -28,7 +50,7 @@ manufacturer name, Serial number and product name information and displays it on
 2. The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
-3. In case of using an AZERTY keyboard, user should add "AZERTY_KEYBOARD" define to ensure correct 
+3. In case of using an AZERTY keyboard, user should add "AZERTY_KEYBOARD" define to ensure correct
       displaying taped characters.
 
 It is possible to fine tune needed USB Host features by modifying defines values in USBH configuration
@@ -74,14 +96,14 @@ Connectivity, USB_Host, USB, HID, Human Interface, Mouse, Keyboard
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI board
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
     and can be easily tailored to any other supported device and development board.
 
 
   - NUCLEO-H563ZI Set-up
 
     - JP2 must be connected (USB_C position) to provide power to VBUS and to the connected USB device.
-	  When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN11.
+          When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN11.
 
     - Plug the USB key into the NUCLEO-H563ZI board through 'USB Type C-Male
       to A-Female' cable to the connector:CN11
@@ -95,8 +117,6 @@ Connectivity, USB_Host, USB, HID, Human Interface, Mouse, Keyboard
       - No parity
       - BaudRate = 115200 baud
       - Flow control: None
-	  
-
 
 ### How to use it ?
 

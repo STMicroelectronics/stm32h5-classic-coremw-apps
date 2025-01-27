@@ -9,7 +9,7 @@
 
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2022 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -48,10 +48,10 @@
 /*#define HAL_CRC_MODULE_ENABLED */
 /*#define HAL_CRYP_MODULE_ENABLED */
 /*#define HAL_DAC_MODULE_ENABLED */
-#define HAL_DCACHE_MODULE_ENABLED
+/*#define HAL_DCACHE_MODULE_ENABLED */
 /*#define HAL_DCMI_MODULE_ENABLED */
 /*#define HAL_DTS_MODULE_ENABLED */
-#define HAL_ETH_MODULE_ENABLED 
+#define HAL_ETH_MODULE_ENABLED
 /*#define HAL_FDCAN_MODULE_ENABLED */
 /*#define HAL_FMAC_MODULE_ENABLED */
 /*#define HAL_GTZC_MODULE_ENABLED */
@@ -59,7 +59,7 @@
 /*#define HAL_HCD_MODULE_ENABLED */
 /*#define HAL_IRDA_MODULE_ENABLED */
 /*#define HAL_IWDG_MODULE_ENABLED */
-#define HAL_I2C_MODULE_ENABLED
+/*#define HAL_I2C_MODULE_ENABLED */
 /*#define HAL_I3C_MODULE_ENABLED */
 /*#define HAL_I2S_MODULE_ENABLED */
 /*#define HAL_LPTIM_MODULE_ENABLED */
@@ -79,10 +79,10 @@
 /*#define HAL_SMBUS_MODULE_ENABLED */
 /*#define HAL_SPI_MODULE_ENABLED */
 /*#define HAL_SRAM_MODULE_ENABLED */
-#define HAL_TIM_MODULE_ENABLED
+/*#define HAL_TIM_MODULE_ENABLED */
 /*#define HAL_RAMCFG_MODULE_ENABLED */
-#define HAL_UART_MODULE_ENABLED 
-/*#define HAL_USART_MODULE_ENABLED */
+#define HAL_UART_MODULE_ENABLED
+/*#define HAL_USART_MODULE_ENABLED*/
 /*#define HAL_WWDG_MODULE_ENABLED */
 /*#define HAL_PSSI_MODULE_ENABLED */
 #define HAL_ICACHE_MODULE_ENABLED
@@ -103,7 +103,7 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-  #define HSE_VALUE    25000000U /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    8000000U /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
@@ -186,7 +186,7 @@
 #define  VDD_VALUE                  3300UL /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY          (15UL)  /*!< tick interrupt priority (lowest by default) */
 #define  USE_RTOS                   0U
-#define  PREFETCH_ENABLE            1U               /*!< Enable prefetch */
+#define  PREFETCH_ENABLE            0U               /*!< Enable prefetch */
 
 /* ############################################ Assert Selection #################################################### */
 
@@ -256,11 +256,11 @@
 #define ETH_RX_DESC_CNT         4U  /* number of Ethernet Rx DMA descriptors */
 
 #define ETH_MAC_ADDR0    ((uint8_t)0x00)
-#define ETH_MAC_ADDR1    ((uint8_t)0x15)
-#define ETH_MAC_ADDR2    ((uint8_t)0x5D)
-#define ETH_MAC_ADDR3    ((uint8_t)0xDC)
-#define ETH_MAC_ADDR4    ((uint8_t)0x50)
-#define ETH_MAC_ADDR5    ((uint8_t)0xE2)
+#define ETH_MAC_ADDR1    ((uint8_t)0x80)
+#define ETH_MAC_ADDR2    ((uint8_t)0xE1)
+#define ETH_MAC_ADDR3    ((uint8_t)0x11)
+#define ETH_MAC_ADDR4    ((uint8_t)0x12)
+#define ETH_MAC_ADDR5    ((uint8_t)0x13)
 
 /* ############################################ SPI peripheral configuration ######################################## */
 

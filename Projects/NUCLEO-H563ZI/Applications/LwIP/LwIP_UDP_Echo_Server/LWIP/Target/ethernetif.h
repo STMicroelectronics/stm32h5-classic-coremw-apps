@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_UDP_Echo_Server/Inc/ethernetif.h 
+  * @file    LwIP/LwIP_UDP_Echo_Server/LWIP/Target/ethernetif.h
   * @author  MCD Application Team
   * @brief   Header for ethernetif.c module
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file

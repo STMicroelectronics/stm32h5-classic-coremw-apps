@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -66,10 +66,6 @@ void HAL_MspInit(void)
 
   /* USER CODE END MspInit 0 */
 
-
-  /* System interrupt init*/
-  /* PendSV_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(PendSV_IRQn, 3, 0);
 
   /* USER CODE BEGIN MspInit 1 */
 

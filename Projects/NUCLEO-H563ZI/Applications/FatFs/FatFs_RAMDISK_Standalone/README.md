@@ -7,7 +7,7 @@ features to configure the RAM as a fat drive.
 At the beginning of the main program the HAL_Init() function is called to reset
 all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
-(SYSCLK) to run at 240 MHz.
+(SYSCLK) to run at 250 MHz.
 
 The application is based on writing and reading back a text file from a drive,
 and it's performed using FatFs APIs to access the FAT volume as described
@@ -33,10 +33,21 @@ It is possible to fine tune needed FatFs features by modifying defines values
 in FatFs configuration file "ffconf.h" available under the project includes
 directory, in a way to fit the application requirements.
 
-LEDs can be used to monitor the application status:
-  - LD1 (GREEN) is ON when the application runs successfully.
-  - LD3 (RED) is ON when any error occurs.
+the user will be notified about the application status with the LEDs.
 
+#### Expected success behavior
+  - LED_GREEN is Toggling to indicate the application is running successfully.
+  - Text file has been created and data was written correctly on RAM.
+
+#### Error behaviors
+   - LED_RED is toggling to indicate an error has occured.
+
+
+#### Assumptions if any
+None
+
+#### Known limitations
+None
 
 
 #### Notes
@@ -49,7 +60,7 @@ LEDs can be used to monitor the application status:
  2. The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
-### Keywords 
+### Keywords
 
 FatFs, Ramdisk, File system, FAT Volume, Format, Mount, Read, Write,
 
@@ -62,8 +73,7 @@ FatFs, Ramdisk, File system, FAT Volume, Format, Mount, Read, Write,
   - FatFs/FatFs_RAMDISK_Standalone/Core/Src/main.c                              Main program
   - FatFs/FatFs_RAMDISK_Standalone/Core/Src/system_stm32h5xx.c                  STM32H5xx system source file
   - FatFs/FatFs_RAMDISK_Standalone/FATFS/Target/ffconf.h                        FAT file system module configuration file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/Target/sram_diskio.h                   sram diskio header file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/Target/sram_diskio.c                   FatFs sram diskio driver
+  - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/sram_diskio_config.h               Sram diskio configuration file
   - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.h                        Header file for App_fatfs.c file
   - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.c                        FatFs application code
 
@@ -71,14 +81,14 @@ FatFs, Ramdisk, File system, FAT Volume, Format, Mount, Read, Write,
 
   - This application runs on STM32H563xx devices
 
-  - This application has been tested with NUCLEO-H563ZI board and can be
+  - This application has been tested with NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03 board and can be
     easily tailored to any other supported device and development board.
-  
+
 
 ### How to use it ?
 
 In order to make the program work, you must do the following:
+
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application
- 

@@ -1,15 +1,12 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_UDP_Echo_Server/Src/main.c
-  * @author  MCD Application Team
-  * @brief   This sample code implements a http server application based on LwIP
-  *          Raw API of LwIP stack. This application uses the STM32Cube ETH HAL
-  *          API to transmit and receive data.
-  *          The communication is done with a web browser of a remote PC.
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,7 +15,7 @@
   *
   ******************************************************************************
   */
-
+/* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "lwip/opt.h"
 #include "lwip/init.h"
@@ -33,9 +30,15 @@
 #include "app_ethernet.h"
 #include "udp_echoserver.h"
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#if defined(__ICCARM__)
+#include <LowLevelIOInterface.h>
+#endif /* __ICCARM__ */
+/* USER CODE END Includes */
+
 /* Private typedef -----------------------------------------------------------*/
 #if defined(__ICCARM__)
-size_t __write(int file, unsigned char const *ptr, size_t len);
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
@@ -45,46 +48,49 @@ int iar_fputc(int ch);
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif /* __ICCARM__ */
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 struct netif gnetif;
 UART_HandleTypeDef huart3;
+
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void BSP_Config(void);
 static void Netif_Config(void);
-static void MX_USART3_UART_Init(void);
+static void USART3_UART_Init(void);
 static void CACHE_Enable(void);
-static void Error_Handler(void);
-/* Private functions ---------------------------------------------------------*/
+
+
 
 /**
-  * @brief  Main program
-  * @param  None
-  * @retval None
+  * @brief  The application entry point.
+  * @retval int
   */
 int main(void)
 {
 
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
   /* Enable the CPU Cache */
   CACHE_Enable();
 
-  /* STM32H5xx HAL library initialization:
-       - Configure the SysTick to generate an interrupt each 1 msec
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
-
-  /* Configure the system clock to 240 MHz */
-  SystemClock_Config();
-
   /* Initialize all configured peripherals */
-  MX_USART3_UART_Init();
-  
+  USART3_UART_Init();
+
   /* Configure the LEDs ...*/
   BSP_Config();
+
+  printf("UDP Echo Server Application \r\n");
+  printf("STM32H563ZI board \r\n");
+  printf("State: Ethernet Initialization ... \r\n");
 
   /* Initialize the LwIP stack */
   lwip_init();
@@ -92,10 +98,11 @@ int main(void)
   /* Configure the Network interface */
   Netif_Config();
 
-  /* TCP echo server Init */
+  /* UDP client connect */
   udp_echoserver_init();
 
   /* Infinite loop */
+
   while (1)
   {
     /* Read a received packet from the Ethernet buffers and send it
@@ -117,9 +124,8 @@ int main(void)
 
 static void BSP_Config(void)
 {
-  BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
-
+  BSP_LED_Init(LED_YELLOW);
+  BSP_LED_Init(LED_RED);
 }
 
 /**
@@ -159,22 +165,8 @@ static void Netif_Config(void)
 #endif
 }
 
-/**
-  * @brief USART3 Initialization Function
-  * @param None
-  * @retval None
-  */
-
-static void MX_USART3_UART_Init(void)
+static void USART3_UART_Init(void)
 {
-
-  /* USER CODE BEGIN USART3_Init 0 */
-
-  /* USER CODE END USART3_Init 0 */
-
-  /* USER CODE BEGIN USART3_Init 1 */
-
-  /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
   huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
@@ -202,21 +194,18 @@ static void MX_USART3_UART_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART3_Init 2 */
-
-  /* USER CODE END USART3_Init 2 */
-
 }
+
 
 /**
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
+static void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+
   /* The voltage scaling allows optimizing the power consumption when the device is
   clocked below the maximum system frequency, to update the voltage scaling value
   regarding system frequency refer to product datasheet.
@@ -225,66 +214,60 @@ void SystemClock_Config(void)
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-    * in the RCC_OscInitTypeDef structure.
-    */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-    RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-    RCC_OscInitStruct.PLL.PLLM = 8;
-    RCC_OscInitStruct.PLL.PLLN = 60;
-    RCC_OscInitStruct.PLL.PLLP = 2;
-    RCC_OscInitStruct.PLL.PLLQ = 2;
-    RCC_OscInitStruct.PLL.PLLR = 2;
-    RCC_OscInitStruct.PLL.PLLRGE = RCC_PLLVCIRANGE_3;
-    RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
-    RCC_OscInitStruct.PLL.PLLFRACN = 0;
-    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-    {
-      /* Initialization Error */
-      Error_Handler();
-    }
-
-  /** Initializes the CPU, AHB and APB buses clocks
-    */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                                |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
-                                |RCC_CLOCKTYPE_PCLK3;
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
-    {
-      /* Initialization Error */
-      Error_Handler();
-    }
-
+  /* Enable HSE Bypass and activate PLL with HSE as source */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS_DIGITAL;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 250;
+  RCC_OscInitStruct.PLL.PLLP = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_1;
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    /* Initialization Error */
+    Error_Handler();
+  }
+  /* Select PLL as system clock source and configure the HCLK, PCLK1, PCLK2 and PCLK3
+     clocks dividers */
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2| RCC_CLOCKTYPE_PCLK3);
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  {
+    /* Initialization Error */
+    Error_Handler();
+  }
 }
 
 /**
-  * @brief  CPU L1-Cache enable.
-  * @param  None
+  * @brief ICACHE Initialization Function
+  * @param None
   * @retval None
   */
 static void CACHE_Enable(void)
 {
   /* Enable I-Cache */
-  HAL_ICACHE_Enable();
+    if (HAL_ICACHE_Enable() != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
-/* USER CODE Begin */
 
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
   size_t idx;
   unsigned char const *pdata = ptr;
-  
+
   for (idx = 0; idx < len; idx++)
   {
     iar_fputc((int)*pdata);
@@ -305,23 +288,23 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 
-/* USER CODE END */
-
 /**
   * @brief  This function is executed in case of error occurrence.
-  * @param  None
   * @retval None
   */
-static void Error_Handler(void)
+void Error_Handler(void)
 {
-  /* User may add here some code to deal with this error */
-  while(1)
+  /* User can add his own implementation to report the HAL error return state */
+  printf("Critical Error \r\n");
+  BSP_LED_Off(LED_YELLOW);
+  while (1)
   {
+  BSP_LED_Toggle(LED_RED);
+  HAL_Delay(500);
   }
 }
 
 #ifdef  USE_FULL_ASSERT
-
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -329,16 +312,13 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
   /* Infinite loop */
   while (1)
   {
   }
 }
-#endif
-
-
+#endif /* USE_FULL_ASSERT */

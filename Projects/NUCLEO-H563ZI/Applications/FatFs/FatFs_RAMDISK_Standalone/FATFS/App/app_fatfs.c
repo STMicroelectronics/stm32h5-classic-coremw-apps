@@ -1,13 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    FatFs/FatFs_RAMDISK_Standalone/FatFs/App/app_fatfs.c
+  * @file    FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.c
   * @author  MCD Application Team
   * @brief   FatFs_RAMDISK_Standalone application file
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -38,7 +38,7 @@ typedef enum {
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define FATFS_MKFS_ALLOWED 1
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,9 +49,11 @@ typedef enum {
 FATFS SRAMDISKFatFS;    /* File system object for SRAMDISK logical drive */
 FIL SRAMDISKFile;       /* File object for SRAMDISK */
 char SRAMDISKPath[4];   /* SRAMDISK logical drive path */
+const MKFS_PARM OptParm = {FM_ANY, 0, 0, 0, 0};
+const uint8_t wtext[] = "This is STM32 working with FatFs and SRAM diskio driver"; /* File write buffer */
 /* USER CODE BEGIN PV */
 FS_FileOperationsTypeDef Appli_state = APPLICATION_IDLE;
-uint8_t workBuffer[_MAX_SS];
+static uint8_t workBuffer[FF_MAX_SS];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,14 +64,14 @@ static int32_t FS_FileOperations(void);
 /**
   * @brief  FatFs initialization
   * @param  None
-  * @retval Initialization result 
+  * @retval Initialization result
   */
-int32_t MX_FATFS_Init(void) 
+int32_t FATFS_Init(void)
 {
   /*## FatFS: Link the disk I/O driver(s)  ###########################*/
-   SRAMDISKFatFS.fs_type = FS_FAT16;   
-if (FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0) 
-  /* USER CODE BEGIN FATFS_Init */
+  SRAMDISKFatFS.fs_type = FS_FAT16;
+  if(FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0)
+    /* USER CODE BEGIN FATFS_Init */
   {
     return APP_ERROR;
   }
@@ -84,22 +86,20 @@ if (FATFS_LinkDriver(&SRAMDISK_Driver, SRAMDISKPath) != 0)
 /**
   * @brief  FatFs application main process
   * @param  None
-  * @retval Process result 
+  * @retval Process result
   */
-int32_t MX_FATFS_Process(void)
+int32_t FATFS_Process(void)
 {
   /* USER CODE BEGIN FATFS_Process */
-  int32_t process_res = APP_OK;  
+  int32_t process_res = APP_OK;
   /* Mass Storage Application State Machine */
   switch(Appli_state)
   {
   case APPLICATION_INIT:
-#if FATFS_MKFS_ALLOWED
-      if (f_mkfs(SRAMDISKPath, FM_ANY, 0, workBuffer, sizeof(workBuffer))!= FR_OK)
+      if(f_mkfs(SRAMDISKPath, &OptParm, workBuffer, sizeof(workBuffer))!= FR_OK)
       {
         process_res = APP_ERROR;
       }
-#endif
       Appli_state = APPLICATION_RUNNING;
       process_res = APP_INIT;
     break;
@@ -114,31 +114,18 @@ int32_t MX_FATFS_Process(void)
   }
   return process_res;
   /* USER CODE END FATFS_Process */
-}  
-
-/**
-  * @brief  Gets Time from RTC (generated when FS_NORTC==0; see ff.c)
-  * @param  None
-  * @retval Time in DWORD
-  */
-DWORD get_fattime(void)
-{
-  /* USER CODE BEGIN get_fattime */
-  return 0;
-  /* USER CODE END get_fattime */  
 }
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN Application */
 /**
   * @brief File system : file operation
-  * @retval File operation result 
+  * @retval File operation result
   */
 static int32_t FS_FileOperations(void)
 {
   FRESULT res; /* FatFs function common result code */
   uint32_t byteswritten, bytesread; /* File write/read counts */
-  uint8_t wtext[] = "This is STM32 working with FatFs and SRAM diskio driver"; /* File write buffer */
   uint8_t rtext[100]; /* File read buffer */
 
   /* Register the file system object to the FatFs module */
@@ -167,7 +154,7 @@ static int32_t FS_FileOperations(void)
             f_close(&SRAMDISKFile);
 
             /* Compare read data with the expected data */
-            if((bytesread == byteswritten))
+            if(bytesread == byteswritten)
             {
               /* Success of the demo: no error occurrence */
               return 0;

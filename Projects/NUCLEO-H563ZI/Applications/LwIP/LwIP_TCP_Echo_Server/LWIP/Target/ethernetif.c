@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_TCP_Echo_Server/Src/ethernetif.c
+  * @file    LwIP/LwIP_TCP_Echo_Server/LWIP/Target/ethernetif.c
   * @author  MCD Application Team
   * @brief   This file implements Ethernet network interface drivers for lwIP
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -32,7 +32,7 @@
 #define IFNAME0 's'
 #define IFNAME1 't'
 
-#define ETH_DMA_TRANSMIT_TIMEOUT      (20U)
+#define ETH_DMA_TRANSMIT_TIMEOUT                (20U)
 
 #define ETH_RX_BUFFER_SIZE            1000U
 #define ETH_RX_BUFFER_CNT             12U
@@ -42,7 +42,7 @@
 /* Private variables ---------------------------------------------------------*/
 /*
 @Note: This interface is implemented to operate in zero-copy mode only:
-        - Rx Buffers will be allocated from LwIP stack memory heap,
+        - Rx Buffers will be allocated from LwIP stack Rx memory pool,
           then passed to ETH HAL driver.
         - Tx Buffers will be allocated from LwIP stack memory heap,
           then passed to ETH HAL driver.
@@ -71,13 +71,15 @@ typedef struct
   uint8_t buff[(ETH_RX_BUFFER_SIZE + 31) & ~31] __ALIGNED(32);
 } RxBuff_t;
 
-
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
-extern u8_t memp_memory_RX_POOL_base[];
+
+/* Memory Pool Declaration */
+LWIP_MEMPOOL_DECLARE(RX_POOL, ETH_RX_BUFFER_CNT, sizeof(RxBuff_t), "Zero-copy RX PBUF pool");
+
+
 
 /* Variable Definitions */
-LWIP_MEMPOOL_DECLARE(RX_POOL, ETH_RX_BUFFER_CNT, sizeof(RxBuff_t), "Zero-copy RX PBUF pool");
 static uint8_t RxAllocStatus;
 
 /* Global Ethernet handle*/
@@ -159,7 +161,12 @@ static void low_level_init(struct netif *netif)
   LAN8742_RegisterBusIO(&LAN8742, &LAN8742_IOCtx);
 
   /* Initialize the LAN8742 ETH PHY */
-  LAN8742_Init(&LAN8742);
+  if(LAN8742_Init(&LAN8742) != LAN8742_STATUS_OK)
+  {
+    netif_set_link_down(netif);
+    netif_set_down(netif);
+    return;
+  }
 
   ethernet_link_check_state(netif);
 }
@@ -213,7 +220,14 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
   TxConfig.TxBuffer = Txbuffer;
   TxConfig.pData = p;
 
-  HAL_ETH_Transmit(&EthHandle, &TxConfig, ETH_DMA_TRANSMIT_TIMEOUT);
+  if( HAL_ETH_Transmit(&EthHandle, &TxConfig, ETH_DMA_TRANSMIT_TIMEOUT)== HAL_OK )
+  {
+    errval = ERR_OK;
+  }
+  else
+  {
+    errval = ERR_IF;
+  }
 
   return errval;
 }
@@ -340,67 +354,67 @@ u32_t sys_now(void)
   */
 void HAL_ETH_MspInit(ETH_HandleTypeDef *heth)
 {
-	  GPIO_InitTypeDef GPIO_InitStruct = {0};
-	  if(heth->Instance==ETH)
-	  {
-	  /* USER CODE BEGIN ETH_MspInit 0 */
+ GPIO_InitTypeDef GPIO_InitStruct = {0};
+ if(heth->Instance==ETH)
+ {
+   /* USER CODE BEGIN ETH_MspInit 0 */
 
-	  /* USER CODE END ETH_MspInit 0 */
-	    /* Peripheral clock enable */
-	    __HAL_RCC_ETH_CLK_ENABLE();
-	    __HAL_RCC_ETHTX_CLK_ENABLE();
-	    __HAL_RCC_ETHRX_CLK_ENABLE();
+   /* USER CODE END ETH_MspInit 0 */
+   /* Peripheral clock enable */
+   __HAL_RCC_ETH_CLK_ENABLE();
+   __HAL_RCC_ETHTX_CLK_ENABLE();
+   __HAL_RCC_ETHRX_CLK_ENABLE();
 
-	    __HAL_RCC_GPIOC_CLK_ENABLE();
-	    __HAL_RCC_GPIOA_CLK_ENABLE();
-	    __HAL_RCC_GPIOB_CLK_ENABLE();
-	    __HAL_RCC_GPIOG_CLK_ENABLE();
-	    /**ETH GPIO Configuration
-	    PC1     ------> ETH_MDC
-	    PA1     ------> ETH_REF_CLK
-	    PA2     ------> ETH_MDIO
-	    PA7     ------> ETH_CRS_DV
-	    PC4     ------> ETH_RXD0
-	    PC5     ------> ETH_RXD1
-	    PB15     ------> ETH_TXD1
-	    PG11     ------> ETH_TX_EN
-	    PG13     ------> ETH_TXD0
-	    */
-	    GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_5;
-	    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	    GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
-	    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+   __HAL_RCC_GPIOC_CLK_ENABLE();
+   __HAL_RCC_GPIOA_CLK_ENABLE();
+   __HAL_RCC_GPIOB_CLK_ENABLE();
+   __HAL_RCC_GPIOG_CLK_ENABLE();
+   /**ETH GPIO Configuration
+   PC1     ------> ETH_MDC
+   PA1     ------> ETH_REF_CLK
+   PA2     ------> ETH_MDIO
+   PA7     ------> ETH_CRS_DV
+   PC4     ------> ETH_RXD0
+   PC5     ------> ETH_RXD1
+   PB15     ------> ETH_TXD1
+   PG11     ------> ETH_TX_EN
+   PG13     ------> ETH_TXD0
+   */
+   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_4|GPIO_PIN_5;
+   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+   GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
+   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-	    GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_7;
-	    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	    GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
-	    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+   GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_7;
+   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+   GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
+   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-	    GPIO_InitStruct.Pin = GPIO_PIN_15;
-	    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	    GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
-	    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+   GPIO_InitStruct.Pin = GPIO_PIN_15;
+   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+   GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
+   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-	    GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_13;
-	    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-	    GPIO_InitStruct.Pull = GPIO_NOPULL;
-	    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	    GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
-	    HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+   GPIO_InitStruct.Pin = GPIO_PIN_11|GPIO_PIN_13;
+   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+   GPIO_InitStruct.Pull = GPIO_NOPULL;
+   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+   GPIO_InitStruct.Alternate = GPIO_AF11_ETH;
+   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-	    /* ETH interrupt Init */
-	    HAL_NVIC_SetPriority(ETH_IRQn, 7, 0);
-	    HAL_NVIC_EnableIRQ(ETH_IRQn);
-	  /* USER CODE BEGIN ETH_MspInit 1 */
+   /* ETH interrupt Init */
+   HAL_NVIC_SetPriority(ETH_IRQn, 7, 0);
+   HAL_NVIC_EnableIRQ(ETH_IRQn);
+   /* USER CODE BEGIN ETH_MspInit 1 */
 
-	  /* USER CODE END ETH_MspInit 1 */
-	  }
+   /* USER CODE END ETH_MspInit 1 */
+  }
 }
 
 /*******************************************************************************
@@ -534,6 +548,7 @@ void ethernet_link_check_state(struct netif *netif)
       netif_set_link_up(netif);
     }
   }
+
 }
 void HAL_ETH_RxAllocateCallback(uint8_t **buff)
 {
@@ -586,12 +601,11 @@ void HAL_ETH_RxLinkCallback(void **pStart, void **pEnd, uint8_t *buff, uint16_t 
   {
     p->tot_len += Length;
   }
-
-  /* Invalidate data cache because Rx DMA's writing to physical memory makes it stale. */
 }
 
 void HAL_ETH_TxFreeCallback(uint32_t * buff)
 {
   pbuf_free((struct pbuf *)buff);
 }
+
 

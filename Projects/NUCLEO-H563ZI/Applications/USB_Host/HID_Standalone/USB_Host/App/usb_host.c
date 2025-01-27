@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -22,6 +22,7 @@
 #include "usb_host.h"
 #include "usbh_core.h"
 #include "usbh_hid.h"
+#include "main.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -36,7 +37,7 @@ __IO HID_APP_State hid_app_state;
 /* Private function prototypes -----------------------------------------------*/
 extern void HID_MOUSE_App(USBH_HandleTypeDef *phost);
 extern void HID_KEYBRD_App(USBH_HandleTypeDef *phost);
-extern void Error_Handler(void);
+
 /* USER CODE END PFP */
 
 /* USB Host core handle declaration */
@@ -76,14 +77,11 @@ void USBH_HID_AppProcess(void)
       {
         hid_app_state = HID_APP_KEYBOARD;
         USBH_UsrLog("Use Keyboard to tape characters:");
-
       }
       else if(USBH_HID_GetDeviceType(&hUsbHostFS) == HID_MOUSE)
       {
-
         hid_app_state = HID_APP_MOUSE;
         USBH_UsrLog("USB HID Host Mouse App...");
-
       }
     }
     break;
@@ -106,7 +104,7 @@ void USBH_HID_AppProcess(void)
     break;
   }
 
-	if (Appli_state == APPLICATION_DISCONNECT)
+  if (Appli_state == APPLICATION_DISCONNECT)
   {
     Appli_state = APPLICATION_IDLE;
     USBH_ErrLog("USB device disconnected !!! \n");
@@ -130,7 +128,7 @@ void MX_USB_HOST_Init(void)
   {
     Error_Handler();
   }
-  if (USBH_RegisterClass(&hUsbHostFS, USBH_HID_CLASS) != USBH_OK) 
+  if (USBH_RegisterClass(&hUsbHostFS, USBH_HID_CLASS) != USBH_OK)
   {
     Error_Handler();
   }

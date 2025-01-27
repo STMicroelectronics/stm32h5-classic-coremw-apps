@@ -1,12 +1,12 @@
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_UDP_Echo_Server/Src/app_ethernet.c
+  * @file    LwIP/LwIP_UDP_Echo_Server/LWIP/App/app_ethernet.c
   * @author  MCD Application Team
-  * @brief   Ethernet specific module
+  * @brief   Ethernet specefic module
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -48,13 +48,18 @@ uint8_t DHCP_state = DHCP_OFF;
 void ethernet_link_status_updated(struct netif *netif)
 {
   if (netif_is_link_up(netif))
- {
+  {
 #if LWIP_DHCP
     /* Update DHCP state machine */
     DHCP_state = DHCP_START;
 #else
-    BSP_LED_On(LED2);
-    BSP_LED_Off(LED3);
+    ip_addr_t ipaddr;
+    char ip_str[16];
+    ip4_addr_set_u32(&ipaddr, netif_ip4_addr(netif)->addr);
+    ip4addr_ntoa_r(&ipaddr, ip_str, sizeof(ip_str));
+    printf("Static IPv4 address: %s\n", ip_str);
+    BSP_LED_On(LED_YELLOW);
+    BSP_LED_Off(LED_RED);
 #endif /* LWIP_DHCP */
   }
   else
@@ -63,8 +68,9 @@ void ethernet_link_status_updated(struct netif *netif)
     /* Update DHCP state machine */
     DHCP_state = DHCP_LINK_DOWN;
 #else
-    BSP_LED_Off(LED2);
-    BSP_LED_On(LED3);
+    printf ("The network cable is not connected \r\n");
+    BSP_LED_Off(LED_YELLOW);
+    BSP_LED_On(LED_RED);
 #endif /* LWIP_DHCP */
   }
 }
@@ -72,7 +78,7 @@ void ethernet_link_status_updated(struct netif *netif)
 #if LWIP_NETIF_LINK_CALLBACK
 /**
   * @brief  Ethernet Link periodic check
-  * @param  netif
+  * @param  netif: the network interface
   * @retval None
   */
 void Ethernet_Link_Periodic_Handle(struct netif *netif)
@@ -89,7 +95,7 @@ void Ethernet_Link_Periodic_Handle(struct netif *netif)
 #if LWIP_DHCP
 /**
   * @brief  DHCP_Process_Handle
-  * @param  None
+  * @param  netif: the network interface
   * @retval None
   */
 void DHCP_Process(struct netif *netif)
@@ -98,17 +104,20 @@ void DHCP_Process(struct netif *netif)
   ip_addr_t netmask;
   ip_addr_t gw;
   struct dhcp *dhcp;
+  char ip_str[16];
 
   switch (DHCP_state)
   {
     case DHCP_START:
     {
-      BSP_LED_Off(LED2);
-      BSP_LED_Off(LED3);
+      BSP_LED_Off(LED_YELLOW);
+      BSP_LED_Off(LED_RED);
+      printf ("State: Looking for DHCP server ...\r\n");
 
       ip_addr_set_zero_ip4(&netif->ip_addr);
       ip_addr_set_zero_ip4(&netif->netmask);
       ip_addr_set_zero_ip4(&netif->gw);
+
       dhcp_start(netif);
       DHCP_state = DHCP_WAIT_ADDRESS;
     }
@@ -119,14 +128,12 @@ void DHCP_Process(struct netif *netif)
       if (dhcp_supplied_address(netif))
       {
         DHCP_state = DHCP_ADDRESS_ASSIGNED;
-        
-        BSP_LED_On(LED2);
-        BSP_LED_Off(LED3);
-        char ip_str[16];
+        BSP_LED_On(LED_YELLOW);
+        BSP_LED_Off(LED_RED);
+
         ip4_addr_set_u32(&ipaddr, netif_ip4_addr(netif)->addr);
         ip4addr_ntoa_r(&ipaddr, ip_str, sizeof(ip_str));
-        printf("IPv4 address: %s\n", ip_str);
-
+        printf("IPv4 address assigned by a DHCP server: %s\r\n", ip_str);
       }
       else
       {
@@ -143,8 +150,12 @@ void DHCP_Process(struct netif *netif)
           IP_ADDR4(&gw, GW_ADDR0, GW_ADDR1, GW_ADDR2, GW_ADDR3);
           netif_set_addr(netif, &ipaddr, &netmask, &gw);
 
-          BSP_LED_On(LED2);
-          BSP_LED_Off(LED3);
+          ip4_addr_set_u32(&ipaddr, netif_ip4_addr(netif)->addr);
+          ip4addr_ntoa_r(&ipaddr, ip_str, sizeof(ip_str));
+          printf ("DHCP Timeout !! \r\n");
+          printf("Static IPv4 address: %s\r\n", ip_str);
+          BSP_LED_On(LED_YELLOW);
+          BSP_LED_Off(LED_RED);
 
         }
       }
@@ -154,8 +165,9 @@ void DHCP_Process(struct netif *netif)
     {
       DHCP_state = DHCP_OFF;
 
-      BSP_LED_Off(LED2);
-      BSP_LED_On(LED3);
+      printf ("The network cable is not connected \r\n");
+      BSP_LED_Off(LED_YELLOW);
+      BSP_LED_On(LED_RED);
     }
     break;
   default: break;
@@ -164,7 +176,7 @@ void DHCP_Process(struct netif *netif)
 
 /**
   * @brief  DHCP periodic check
-  * @param  netif
+  * @param  netif: the network interface
   * @retval None
   */
 void DHCP_Periodic_Handle(struct netif *netif)

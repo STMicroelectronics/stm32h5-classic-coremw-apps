@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -23,7 +23,7 @@
 #include "stm32h5xx_hal.h"
 #include "usbd_def.h"
 #include "usbd_core.h"
-
+#include "main.h"
 #include "usbd_hid.h"
 
 /* USER CODE BEGIN Includes */
@@ -41,7 +41,6 @@
 /* USER CODE END PV */
 
 PCD_HandleTypeDef hpcd_USB_DRD_FS;
-void Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 
@@ -51,6 +50,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+void SystemClockConfig_Resume(void);
 
 /* USER CODE END PFP */
 
@@ -68,28 +68,30 @@ extern void SystemClock_Config(void);
 
 /**
   * @brief  Initializes the PCD MSP.
-  * @param  pcdHandle: PCD handle
+  * @param  hpcd: PCD handle
   * @retval None
   */
-void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
+void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
 {
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  
-  if(pcdHandle->Instance==USB_DRD_FS)
-  {
-  /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
-  /* USER CODE END USB_DRD_FS_MspInit 0 */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI48;
-    RCC_OscInitStruct.HSI48State = RCC_HSI48_ON;
-    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
-    PeriphClkInit.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
-    HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit);
-    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  if(hpcd->Instance==USB_DRD_FS)
+  {
+    /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
+
+    /* USER CODE END USB_DRD_FS_MspInit 0 */
+
+    /** Initializes the peripherals clock
+    */
+    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USB;
+    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
       Error_Handler();
     }
+
+    /* Enable VDDUSB */
+    HAL_PWREx_EnableVddUSB();
 
     /* Peripheral clock enable */
     __HAL_RCC_USB_CLK_ENABLE();
@@ -109,21 +111,24 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   * @param  hpcd: PCD handle
   * @retval None
   */
-void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
+void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
 {
-  /* USER CODE BEGIN USB_MspDeInit 0 */
+  if(hpcd->Instance==USB_DRD_FS)
+  {
+    /* USER CODE BEGIN USB_MspDeInit 0 */
 
-  /* USER CODE END USB_MspDeInit 0 */
+    /* USER CODE END USB_MspDeInit 0 */
 
-  /* Peripheral clock disable */
-  __HAL_RCC_USB_CLK_DISABLE();
-  
-  /* Peripheral interrupt Deinit*/
-  HAL_NVIC_DisableIRQ(USB_DRD_FS_IRQn);
-  
-  /* USER CODE BEGIN USB_MspDeInit 1 */
+    /* Peripheral clock disable */
+    __HAL_RCC_USB_CLK_DISABLE();
 
-  /* USER CODE END USB_MspDeInit 1 */
+    /* Peripheral interrupt Deinit*/
+    HAL_NVIC_DisableIRQ(USB_DRD_FS_IRQn);
+
+    /* USER CODE BEGIN USB_MspDeInit 1 */
+
+    /* USER CODE END USB_MspDeInit 1 */
+  }
 }
 
 /**
@@ -181,7 +186,7 @@ void HAL_PCD_DataInStageCallback(PCD_HandleTypeDef *hpcd, uint8_t epnum)
 {
   /* USER CODE BEGIN HAL_PCD_DataInStageCallback_PreTreatment */
 
-  /* USER CODE END HAL_PCD_DataInStageCallback_PreTreatment */  
+  /* USER CODE END HAL_PCD_DataInStageCallback_PreTreatment */
   USBD_LL_DataInStage((USBD_HandleTypeDef*)hpcd->pData, epnum, hpcd->IN_ep[epnum].xfer_buff);
   /* USER CODE BEGIN HAL_PCD_DataInStageCallback_PostTreatment  */
 
@@ -230,7 +235,7 @@ void HAL_PCD_ResetCallback(PCD_HandleTypeDef *hpcd)
   }
     /* Set Speed. */
   USBD_LL_SetSpeed((USBD_HandleTypeDef*)hpcd->pData, speed);
-  
+
   /* Reset Device */
   USBD_LL_Reset((USBD_HandleTypeDef*)hpcd->pData);
   /* USER CODE BEGIN HAL_PCD_ResetCallback_PostTreatment */
@@ -261,9 +266,24 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
   if ((hpcd->Init.low_power_enable) &&
       (((USBD_HandleTypeDef*)hpcd->pData)->dev_old_state == USBD_STATE_CONFIGURED))
   {
-      CLEAR_BIT(SCB->SCR, ((uint32_t)SCB_SCR_SLEEPDEEP_Msk));
-      /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register */
-      SCB->SCR |= (uint32_t)((uint32_t)( SCB_SCR_SLEEPONEXIT_Msk));
+#ifdef USBD_LPM_SLEEP_CONFIG
+    /* Set SLEEPDEEP bit of Cortex System Control Register. */
+    SCB->SCR |= (uint32_t)(SCB_SCR_SLEEPDEEP_Msk);
+#elif defined USBD_LPM_STOP0_CONFIG
+    __HAL_RCC_USB_CLK_SLEEP_ENABLE();
+    /* Select Stop 0 mode */
+    MODIFY_REG(PWR->PMCR, PWR_PMCR_LPMS, 0U);
+    /* Set SLEEPDEEP bit of Cortex System Control Register. */
+    SCB->SCR |= (uint32_t)(SCB_SCR_SLEEPONEXIT_Msk);
+    HAL_PWR_EnableSleepOnExit();
+#else
+    __HAL_RCC_USB_CLK_SLEEP_ENABLE();
+    /* Stop 1 mode */
+    MODIFY_REG(PWR->PMCR, PWR_PMCR_LPMS, PWR_PMCR_LPMS_Msk);
+    /* Set SLEEPDEEP bit of Cortex System Control Register. */
+    SCB->SCR |= (uint32_t)(SCB_SCR_SLEEPONEXIT_Msk);
+    HAL_PWR_EnableSleepOnExit();
+#endif
   }
   /* USER CODE END 2 */
   /* USER CODE BEGIN HAL_PCD_SuspendCallback_PostTreatment */
@@ -402,10 +422,9 @@ USBD_StatusTypeDef USBD_LL_Init(USBD_HandleTypeDef *pdev)
   hpcd_USB_DRD_FS.pData = pdev;
   /* Link the driver to the stack. */
   pdev->pData = &hpcd_USB_DRD_FS;
-  
+
   hpcd_USB_DRD_FS.Instance = USB_DRD_FS;
   hpcd_USB_DRD_FS.Init.dev_endpoints = 8;
-  hpcd_USB_DRD_FS.Init.Host_channels = 8;
   hpcd_USB_DRD_FS.Init.speed = USBD_FS_SPEED;
   hpcd_USB_DRD_FS.Init.phy_itface = PCD_PHY_EMBEDDED;
   hpcd_USB_DRD_FS.Init.Sof_enable = DISABLE;
@@ -693,6 +712,23 @@ void USBD_LL_Delay(uint32_t Delay)
 }
 
 /**
+  * @brief This function provides accurate delay (in milliseconds) based
+  * on SysTick counter flag.
+  * @param Delay: specifies the delay time length, in milliseconds.
+  * @retval None
+  */
+void HAL_Delay(__IO uint32_t Delay)
+{
+  while (Delay)
+  {
+    if (SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk)
+    {
+      Delay--;
+    }
+  }
+}
+
+/**
   * @brief  Static single allocation.
   * @param  size: Size of allocated memory
   * @retval None
@@ -713,7 +749,15 @@ void USBD_static_free(void *p)
 }
 
 /* USER CODE BEGIN 5 */
-
+/**
+  * @brief  Configures system clock after wake-up from USB resume callBack:
+  *         enable HSI, PLL and select PLL as system clock source.
+  * @retval None
+  */
+ void SystemClockConfig_Resume(void)
+{
+  SystemClock_Config();
+}
 /* USER CODE END 5 */
 
 /**

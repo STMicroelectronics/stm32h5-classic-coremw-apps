@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -36,6 +36,7 @@ extern "C" {
 #undef LE16
 #undef LE32
 #include "stm32h5xx_nucleo.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -45,24 +46,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-/* User can use this section to tailor USARTx/UARTx instance used and associated
-   resources */
-/* Definition for USARTx clock resources */
 
-#define USARTx_CLK_ENABLE()              __HAL_RCC_USART3_CLK_ENABLE()
-#define USARTx_RX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOC_CLK_ENABLE()
-#define USARTx_TX_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOC_CLK_ENABLE()
-
-#define USARTx_FORCE_RESET()             __HAL_RCC_USART3_FORCE_RESET()
-#define USARTx_RELEASE_RESET()           __HAL_RCC_USART3_RELEASE_RESET()
-
-/* Definition for USARTx Pins */
-#define USARTx_TX_PIN                    GPIO_PIN_10
-#define USARTx_TX_GPIO_PORT              GPIOC
-#define USARTx_TX_AF                     GPIO_AF0_USART3 
-#define USARTx_RX_PIN                    GPIO_PIN_11
-#define USARTx_RX_GPIO_PORT              GPIOC
-#define USARTx_RX_AF                     GPIO_AF0_USART3
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

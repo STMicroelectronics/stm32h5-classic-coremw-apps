@@ -1,15 +1,12 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    LwIP/LwIP_TCP_Echo_Server/Src/main.c
-  * @author  MCD Application Team
-  * @brief   This sample code implements a http server application based on LwIP
-  *          Raw API of LwIP stack. This application uses the STM32Cube ETH HAL
-  *          API to transmit and receive data.
-  *          The communication is done with a web browser of a remote PC.
+  * @file           : main.c
+  * @brief          : Main program body
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2017 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,7 +15,7 @@
   *
   ******************************************************************************
   */
-
+/* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "lwip/opt.h"
 #include "lwip/init.h"
@@ -33,9 +30,15 @@
 #include "app_ethernet.h"
 #include "tcp_echoserver.h"
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+#if defined(__ICCARM__)
+#include <LowLevelIOInterface.h>
+#endif /* __ICCARM__ */
+/* USER CODE END Includes */
+
 /* Private typedef -----------------------------------------------------------*/
 #if defined(__ICCARM__)
-size_t __write(int file, unsigned char const *ptr, size_t len);
 /* New definition from EWARM V9, compatible with EWARM8 */
 int iar_fputc(int ch);
 #define PUTCHAR_PROTOTYPE int iar_fputc(int ch)
@@ -45,46 +48,49 @@ int iar_fputc(int ch);
 #elif defined(__GNUC__)
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif /* __ICCARM__ */
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 struct netif gnetif;
 UART_HandleTypeDef huart3;
+
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void BSP_Config(void);
 static void Netif_Config(void);
 static void USART3_UART_Init(void);
 static void CACHE_Enable(void);
-static void Error_Handler(void);
-/* Private functions ---------------------------------------------------------*/
+
+
 
 /**
-  * @brief  Main program
-  * @param  None
-  * @retval None
+  * @brief  The application entry point.
+  * @retval int
   */
 int main(void)
 {
 
-  /* STM32h5xx HAL library initialization:
-       - Configure the SysTick to generate an interrupt each 1 msec
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-  
-  /* Enable the Instruction Cache */
+
+  /* Configure the system clock */
+  SystemClock_Config();
+
+  /* Enable the CPU Cache */
   CACHE_Enable();
 
-  /* Configure the system clock to 60 MHz */
-  SystemClock_Config();
-  
   /* Initialize all configured peripherals */
   USART3_UART_Init();
-  
+
   /* Configure the LEDs ...*/
   BSP_Config();
+
+  printf("TCP Echo Server Application \r\n");
+  printf("STM32H563ZI board \r\n");
+  printf("State: Ethernet Initialization ... \r\n");
 
   /* Initialize the LwIP stack */
   lwip_init();
@@ -92,16 +98,17 @@ int main(void)
   /* Configure the Network interface */
   Netif_Config();
 
-  /* TCP echo server Init */
+  /* UDP client connect */
   tcp_echoserver_init();
 
   /* Infinite loop */
+
   while (1)
   {
     /* Read a received packet from the Ethernet buffers and send it
        to the lwIP for handling */
     ethernetif_input(&gnetif);
-    
+
     /* Handle timeouts */
     sys_check_timeouts();
 
@@ -117,9 +124,8 @@ int main(void)
 
 static void BSP_Config(void)
 {
-  BSP_LED_Init(LED2);
-  BSP_LED_Init(LED3);
-
+  BSP_LED_Init(LED_YELLOW);
+  BSP_LED_Init(LED_RED);
 }
 
 /**
@@ -152,29 +158,15 @@ static void Netif_Config(void)
   /*  Registers the default network interface */
   netif_set_default(&gnetif);
 
+  ethernet_link_status_updated(&gnetif);
 
 #if LWIP_NETIF_LINK_CALLBACK
   netif_set_link_callback(&gnetif, ethernet_link_status_updated);
-  
 #endif
 }
 
-/**
-  * @brief USART3 Initialization Function
-  * @param None
-  * @retval None
-  */
-
 static void USART3_UART_Init(void)
 {
-
-  /* USER CODE BEGIN USART3_Init 0 */
-
-  /* USER CODE END USART3_Init 0 */
-
-  /* USER CODE BEGIN USART3_Init 1 */
-
-  /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
   huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
@@ -186,7 +178,7 @@ static void USART3_UART_Init(void)
   huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
   huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
   huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_UART_Init(&huart3) != HAL_OK)
+    if (HAL_UART_Init(&huart3) != HAL_OK)
   {
     Error_Handler();
   }
@@ -202,10 +194,6 @@ static void USART3_UART_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART3_Init 2 */
-
-  /* USER CODE END USART3_Init 2 */
-
 }
 
 
@@ -213,96 +201,73 @@ static void USART3_UART_Init(void)
   * @brief System Clock Configuration
   * @retval None
   */
-void SystemClock_Config(void)
+static void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  HAL_StatusTypeDef ret = HAL_OK;
-  /** Configure the main internal regulator output voltage
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+
+  /* The voltage scaling allows optimizing the power consumption when the device is
+  clocked below the maximum system frequency, to update the voltage scaling value
+  regarding system frequency refer to product datasheet.
   */
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
 
   while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
 
-  /* Enable D2 domain SRAM1 Clock (0x30000000 AXI)*/
-  __HAL_RCC_SRAM2_CLK_ENABLE(); //PORTT
-
-  /** Initializes the RCC Oscillators according to the specified parameters
-    * in the RCC_OscInitTypeDef structure.
-    */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-    RCC_OscInitStruct.HSIDiv = RCC_HSI_DIV1;
-    RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-    RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-    RCC_OscInitStruct.PLL.PLLM = 8;
-    RCC_OscInitStruct.PLL.PLLN = 60;
-    RCC_OscInitStruct.PLL.PLLP = 2;
-    RCC_OscInitStruct.PLL.PLLQ = 2;
-    RCC_OscInitStruct.PLL.PLLR = 2;
-    RCC_OscInitStruct.PLL.PLLRGE = RCC_PLLVCIRANGE_3;
-    RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
-    RCC_OscInitStruct.PLL.PLLFRACN = 0;
-  ret = HAL_RCC_OscConfig(&RCC_OscInitStruct);
-  if(ret != HAL_OK)
+  /* Enable HSE Bypass and activate PLL with HSE as source */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS_DIGITAL;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLL1_SOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 250;
+  RCC_OscInitStruct.PLL.PLLP = 2;
+  RCC_OscInitStruct.PLL.PLLQ = 2;
+  RCC_OscInitStruct.PLL.PLLR = 2;
+  RCC_OscInitStruct.PLL.PLLFRACN = 0;
+  RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1_VCIRANGE_1;
+  RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1_VCORANGE_WIDE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-    while(1);
+    /* Initialization Error */
+    Error_Handler();
   }
-
-  /** Initializes the CPU, AHB and APB buses clocks
-    */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                                |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2
-                                |RCC_CLOCKTYPE_PCLK3;
-    RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-    RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
-
-  ret = HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
-  if(ret != HAL_OK)
+  /* Select PLL as system clock source and configure the HCLK, PCLK1, PCLK2 and PCLK3
+     clocks dividers */
+  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2| RCC_CLOCKTYPE_PCLK3);
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB3CLKDivider = RCC_HCLK_DIV1;
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
-    while(1);
+    /* Initialization Error */
+    Error_Handler();
   }
-
-/*
-  Note : The activation of the I/O Compensation Cell is recommended with communication  interfaces
-          (GPIO, SPI, FMC, OSPI ...)  when  operating at  high frequencies(please refer to product datasheet)
-          The I/O Compensation Cell activation  procedure requires :
-        - The activation of the CSI clock
-        - The activation of the SYSCFG clock
-        - Enabling the I/O Compensation Cell : setting bit[0] of register SYSCFG_CCCSR
-*/
-
-
-  __HAL_RCC_CSI_ENABLE() ;
-
-  //__HAL_RCC_SYSCFG_CLK_ENABLE() ; APB4 Not implemented //PORTT
-
-  HAL_SBS_EnableVddIO1CompensationCell();
-
 }
 
 /**
-  * @brief  Enable ICACHE with 2-ways set-associative configuration.
-  * @param  None
+  * @brief ICACHE Initialization Function
+  * @param None
   * @retval None
   */
 static void CACHE_Enable(void)
 {
   /* Enable I-Cache */
-	HAL_ICACHE_Enable();
+    if (HAL_ICACHE_Enable() != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
-/* USER CODE Begin */
+
 #if defined(__ICCARM__)
 size_t __write(int file, unsigned char const *ptr, size_t len)
 {
   size_t idx;
   unsigned char const *pdata = ptr;
-  
+
   for (idx = 0; idx < len; idx++)
   {
     iar_fputc((int)*pdata);
@@ -323,18 +288,23 @@ PUTCHAR_PROTOTYPE
   return ch;
 }
 
-/* USER CODE END */
-
-static void Error_Handler(void)
+/**
+  * @brief  This function is executed in case of error occurrence.
+  * @retval None
+  */
+void Error_Handler(void)
 {
-  /* User may add here some code to deal with this error */
-  while(1)
+  /* User can add his own implementation to report the HAL error return state */
+  printf("Critical Error \r\n");
+  BSP_LED_Off(LED_YELLOW);
+  while (1)
   {
+  BSP_LED_Toggle(LED_RED);
+  HAL_Delay(500);
   }
 }
 
 #ifdef  USE_FULL_ASSERT
-
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
@@ -342,18 +312,13 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t* file, uint32_t line)
+void assert_failed(uint8_t *file, uint32_t line)
 {
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-
   /* Infinite loop */
   while (1)
   {
   }
 }
-#endif
-
-
-
-
+#endif /* USE_FULL_ASSERT */

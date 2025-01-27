@@ -9,7 +9,7 @@
 
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -79,10 +79,10 @@
 /*#define HAL_SMBUS_MODULE_ENABLED */
 /*#define HAL_SPI_MODULE_ENABLED */
 /*#define HAL_SRAM_MODULE_ENABLED */
-#define HAL_TIM_MODULE_ENABLED
+/*#define HAL_TIM_MODULE_ENABLED */
 /*#define HAL_RAMCFG_MODULE_ENABLED */
 /*#define HAL_UART_MODULE_ENABLED */
-/*#define HAL_USART_MODULE_ENABLED */
+/*#define HAL_USART_MODULE_ENABLED*/
 /*#define HAL_WWDG_MODULE_ENABLED */
 /*#define HAL_PSSI_MODULE_ENABLED */
 #define HAL_ICACHE_MODULE_ENABLED
@@ -103,7 +103,7 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-  #define HSE_VALUE    25000000U /*!< Value of the External oscillator in Hz */
+  #define HSE_VALUE    8000000U /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
@@ -186,7 +186,7 @@
 #define  VDD_VALUE                  3300UL /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY          (15UL)  /*!< tick interrupt priority (lowest by default) */
 #define  USE_RTOS                   0U
-#define  PREFETCH_ENABLE            1U               /*!< Enable prefetch */
+#define  PREFETCH_ENABLE            0U               /*!< Enable prefetch */
 
 /* ############################################ Assert Selection #################################################### */
 

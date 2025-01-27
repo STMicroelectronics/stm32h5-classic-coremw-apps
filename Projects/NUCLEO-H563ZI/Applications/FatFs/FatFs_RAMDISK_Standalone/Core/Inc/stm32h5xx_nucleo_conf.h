@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -52,6 +52,8 @@ extern "C" {
 
 /* IRQ priorities */
 #define BSP_BUTTON_USER_IT_PRIORITY         15U
+
+#define BUS_SPI1_BAUDRATE                   18000000
 
 /**
   * @}

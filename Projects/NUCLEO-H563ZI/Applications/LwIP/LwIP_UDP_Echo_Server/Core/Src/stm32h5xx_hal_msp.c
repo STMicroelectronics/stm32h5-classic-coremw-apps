@@ -7,7 +7,7 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -73,7 +74,6 @@ void HAL_MspInit(void)
   /* USER CODE END MspInit 1 */
 }
 
-
 /**
 * @brief UART MSP Initialization
 * This function configures the hardware resources used in this example
@@ -96,9 +96,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     PeriphClkInitStruct.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
     if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
-      while (1)
-      {
-      }
+    Error_Handler();
     }
 
     /* Peripheral clock enable */

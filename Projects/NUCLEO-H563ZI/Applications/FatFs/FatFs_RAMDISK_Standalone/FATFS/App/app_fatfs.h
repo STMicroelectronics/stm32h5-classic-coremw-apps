@@ -1,13 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    FatFs/FatFs_RAMDISK_Standalone/FatFsApp/Inc/app_fatfs.h
+  * @file    FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.h
   * @author  MCD Application Team
   * @brief   Header for app_fatfs.c file
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2023 STMicroelectronics.
+  * Copyright (c) 2024 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -28,36 +28,13 @@
 #include "sram_diskio.h" /* defines SRAM_Driver as external */
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
 /* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
-
-/* USER CODE END ET */
-
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
-/* USER CODE END EC */
-
 /* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
-
 /* Exported functions prototypes ---------------------------------------------*/
-int32_t MX_FATFS_Init(void);
-int32_t MX_FATFS_Process(void);
-/* USER CODE BEGIN EFP */
-
-/* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
-/* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
+int32_t FATFS_Init(void);
+int32_t FATFS_Process(void);
 
 
 
