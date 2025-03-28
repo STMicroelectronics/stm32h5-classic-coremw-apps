@@ -1,4 +1,4 @@
-## LwIP_HTTP_Server_Socket_RTOS Application Description
+## <b>LwIP_HTTP_Server_Socket_RTOS Application Description</b>
 
 This application guides STM32Cube HAL API users to run a http server application
 based on Socket API of LwIP TCP/IP stack
@@ -21,29 +21,29 @@ all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
 (SYSCLK) to run at 250 MHz.
 
-#### Expected success behavior
+#### <b>Expected success behavior</b>
    - The board's IP address is printed on the HyperTerminal
    - LED_YELLOW is ON indicating the ethernet cable is connected.
    - Home page is well displayed on the browser after entering the url: http://IP@/STM32H5xx.html
    - RTOS statistics are well displayed on the browser after entering the url: http://IP@/STM32H5xxTASKS.html
 
-#### Error behaviors
+#### <b>Error behaviors</b>
    - LED_RED is ON indicating the ethernet cable is not connected.
-   - LED_RED is toggling to indicate a critical error has occured.
+   - LED_RED is toggling to indicate a critical error has occurred.
    - The error message is printed on the HyperTerminal.
    - The web server files are not properly loaded.
 
-#### Assumptions if any
+#### <b>Assumptions if any</b>
    - If the Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in
    the LAN used to test the application.
    - The application is configuring the Ethernet IP with a static predefined MAC Address, make sure to change it in case
    multiple boards are connected on the same LAN to avoid any potential network traffic issues.
    - The MAC Address is defined in the stm32h5xx_hal_conf.h
 
-#### Known limitations
+#### <b>Known limitations</b>
 None
 
-#### Notes
+#### <b>Notes</b>
    1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in HAL time base ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the HAL time base interrupt must have higher priority (numerically lower)
@@ -56,35 +56,35 @@ None
 For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications"
 
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, LwIP, Ethernet, HTTP Server, Socket, TCP/IP, RTOS, DHCP
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/app_ethernet.h          header of app_ethernet.c file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/ethernetif.h         header for ethernetif.c file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/main.h                  Main program header file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/lwipopts.h           LwIP stack configuration options
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/FreeRTOSConfig.h        FreeRTOS configuration options
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/httpserver_socket.h     header for httpserver_socket.c
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/app_ethernet.c          Ethernet specific module
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/main.c                  Main program
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/system_stm32h5xx.c      STM32 system clock configuration file
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/httpserver_socket.c     httpserver socket main thread
-  - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/fsdata_custom.c         ROM filesystem data (html pages)
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/app_ethernet.h          header of app_ethernet.c file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/ethernetif.h         header for ethernetif.c file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/main.h                  Main program header file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/lwipopts.h           LwIP stack configuration options
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Inc/FreeRTOSConfig.h        FreeRTOS configuration options
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/httpserver_socket.h     header for httpserver_socket.c
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/app_ethernet.c          Ethernet specific module
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/main.c                  Main program
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/Core/Src/system_stm32h5xx.c      STM32 system clock configuration file
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/httpserver_socket.c     httpserver socket main thread
+    - LwIP/LwIP_HTTP_Server_Socket_RTOS/LWIP/App/fsdata_custom.c         ROM filesystem data (html pages)
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
      - Http client: Google Chrome (v55)
      - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
@@ -103,7 +103,7 @@ Connectivity, LwIP, Ethernet, HTTP Server, Socket, TCP/IP, RTOS, DHCP
     - PC must share the same LAN network configuration with the NUCLEO-H563ZI board
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

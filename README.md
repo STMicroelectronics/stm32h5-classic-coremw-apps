@@ -2,7 +2,7 @@
 
 ![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/stm32h5-classic-coremw-apps.svg?color=brightgreen)
 
-![freertos](https://img.shields.io/badge/freertos-v10.6.2-blue.svg) ![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.3-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.3-blue.svg) ![lwip](https://img.shields.io/badge/lwip-v2.1.3-blue.svg)
+![freertos](https://img.shields.io/badge/freertos-v10.6.2-blue.svg) ![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.3-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.3-blue.svg) ![lwip](https://img.shields.io/badge/lwip-v2.2.0-blue.svg)
 
 ## Description
 
@@ -32,11 +32,15 @@ The **STM32H5 Classic CoreMW** package contains the following applications:
 Middleware    | Application                            | Short Description
 --------------|----------------------------------------|------------------------------------------------------------------------
 FatFs         | FatFs_RAMDISK_Standalone               | Shows how to use STM32Cube firmware with FatFs middleware component as a generic FAT file system module
+FatFs         | FatFs_MultiAccess                      | Shows how to use STM32Cube firmware with FatFs middleware component as a generic FAT file system module
+FatFs         | FatFs_uSD_Standalone                   | Shows how to use STM32Cube firmware with FatFs middleware component as a generic FAT file system module
 ST USB Device | HID_Standalone                         | Shows a typical application where the STM32 MCU is enumerated as a HID device
 ST USB Device | CDC_Standalone                         | Shows a typical application where the STM32 MCU is enumerated as a CDC device
 ST USB Device | DFU_Standalone                         | Shows a typical application where the STM32 MCU is enumerated as a DFU device
+ST USB Device | MSC_Standalone                         | Shows a typical application where the STM32 MCU is enumerated as a MSC device
 ST USB Host   | HID_Standalone                         | Shows how to use USB host application based on the Human Interface Class (HID) to connect a mouse or a keyboard
 ST USB Host   | MSC_Standalone                         | Shows how to use USB host application based on the Mass Storage Class (MSC) to communicate with a usb flash disk
+ST USB Host   | DualClass_Standalone                   | Shows how to use USB host application based on the Dual Class support feature integrating Mass Storage (MSC) to  communicate with a usb flash disk and Human Interface (HID) to connect a mouse or a keyboard
 LwIP          | LwIP_TCP_Echo_Server                   | This application guides STM32Cube HAL API users to run TCP Echo Server application based on Raw API of LwIP TCP/IP stack
 LwIP          | LwIP_TCP_Echo_Client                   | This application guides STM32Cube HAL API users to run TCP Echo Client application based on Raw API of LwIP TCP/IP stack
 LwIP          | LwIP_UDP_Echo_Server                   | This application guides STM32Cube HAL API users to run UDP Echo Server application based on Raw API of LwIP TCP/IP stack
@@ -45,6 +49,7 @@ LwIP          | LwIP_HTTP_Server_Raw                   | This application guides
 LwIP          | LwIP_HTTP_Server_Socket_RTOS           | This application guides STM32Cube HAL API users to run a http server application based on Socket API of LwIP TCP/IP stack
 LwIP          | LwIP_HTTP_Server_Netconn_RTOS          | This application guides STM32Cube HAL API users to run a http server application based on Netconn API of LwIP TCP/IP stack
 LwIP          | LwIP_UDPTCP_Echo_Server_Netconn_RTOS   | This application guides STM32Cube HAL API users to run a UDP/TCP Echo Server application based on Netconn API of LwIP TCP/IP stack
+LwIP          | LwIP_TFTP_Server                       | This application guides STM32Cube HAL API users to run a UDP/TCP Echo Server application based on Netconn API of LwIP TCP/IP stack
 
 #### *Note*
 
@@ -54,11 +59,12 @@ LwIP          | LwIP_UDPTCP_Echo_Server_Netconn_RTOS   | This application guides
 ## Boards available
 
  * STM32H5
-   * [NUCLEO-H563ZI](https://www.st.com/en/evaluation-tools/nucleo-h563zi.html) RevB
+   * [NUCLEO-H563ZI](https://www.st.com/en/evaluation-tools/nucleo-h563zi.html) RevC
+   * [STM32H573I-DK](https://www.st.com/en/evaluation-tools/stm32h573i-dk.html) RevC
 
 ## Development Toolchains and Compilers
 
- * IAR Embedded Workbench for ARM (EWARM) toolchain **9.20.1** + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM)
+ * IAR Embedded Workbench for ARM (EWARM) toolchain **9.20.4** + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM)
  * RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/MDK-ARM)
  * [STM32CubeIDE **V1.17.0**](https://www.st.com/en/development-tools/stm32cubeide.html) + ST-LINKV3
 
@@ -71,13 +77,16 @@ This package has been developed and tested using the list of components detailed
 Name                       |   Version
 ---------------------------|---------------
 Cortex-M CMSIS             |   V5.9.0
-STM32H5xx CMSIS            |   V1.3.1
-STM32H5xx HAL              |   V1.4.0
+STM32H5xx CMSIS            |   V1.4.0
+STM32H5xx HAL              |   V1.5.0
 BSP STM32H5xx NUCLEO       |   V1.1.1
+BSP STM32H573I-DK          |   V1.1.0
 BSP Common                 |   V7.3.0
 BSP lan8742                |   V1.0.4
+BSP tcpp0203               |   V1.2.3
+FreeRTOS                   |   V10.6.2
 FatFS                      |   R0.15
-LwIP                       |   V2.1.3
+LwIP                       |   V2.2.0
 STM32 USB Device Library   |   V2.11.3
 STM32 USB Host Library     |   V3.5.3
 STM32 USBPD Core Library   |   V4.1.1

@@ -82,7 +82,7 @@
 /*#define HAL_TIM_MODULE_ENABLED */
 /*#define HAL_RAMCFG_MODULE_ENABLED */
 #define HAL_UART_MODULE_ENABLED
-/*#define HAL_USART_MODULE_ENABLED*/
+/*#define HAL_USART_MODULE_ENABLED */
 /*#define HAL_WWDG_MODULE_ENABLED */
 /*#define HAL_PSSI_MODULE_ENABLED */
 #define HAL_ICACHE_MODULE_ENABLED
@@ -255,12 +255,12 @@
 #define ETH_TX_DESC_CNT         4U  /* number of Ethernet Tx DMA descriptors */
 #define ETH_RX_DESC_CNT         4U  /* number of Ethernet Rx DMA descriptors */
 
-#define ETH_MAC_ADDR0    ((uint8_t)0x00)
-#define ETH_MAC_ADDR1    ((uint8_t)0x80)
-#define ETH_MAC_ADDR2    ((uint8_t)0xE1)
+#define ETH_MAC_ADDR0    ((uint8_t)0x02)
+#define ETH_MAC_ADDR1    ((uint8_t)0x00)
+#define ETH_MAC_ADDR2    ((uint8_t)0x00)
 #define ETH_MAC_ADDR3    ((uint8_t)0x00)
 #define ETH_MAC_ADDR4    ((uint8_t)0x00)
-#define ETH_MAC_ADDR5    ((uint8_t)0x33)
+#define ETH_MAC_ADDR5    ((uint8_t)0x00)
 
 /* ############################################ SPI peripheral configuration ######################################## */
 

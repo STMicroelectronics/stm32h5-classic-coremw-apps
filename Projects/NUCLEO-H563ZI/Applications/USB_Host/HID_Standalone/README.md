@@ -1,4 +1,4 @@
-## HID_Standalone Application Description
+## <b>HID_Standalone Application Description</b>
 
 This application is a part of the USB Host Library package using STM32Cube firmware. It describes how to use
 USB host application based on the Human Interface Class (HID) on the STM32H5XX devices.
@@ -30,7 +30,7 @@ The received HID reports are used by host to identify:
 #### <b>Error behaviors</b>
 
   - Errors are detected (such as unsupported device, enumeration fail) and the corresponding message is displayed on the HyperTerminal.
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 
@@ -40,7 +40,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" specification and HID class
 
 None
 
-#### Notes
+#### <b>Notes</b>
 1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -68,45 +68,44 @@ requirements, such as:
 For more details about the STM32Cube USB Host library, please refer to UM1720
 "STM32Cube USB Host library".
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, USB_Host, USB, HID, Human Interface, Mouse, Keyboard
 
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - USB_Host/HID_Standalone/Core/Src/main.c                         Main program
-  - USB_Host/HID_Standalone/Core/Src/system_stm32h5xx.c             STM32H5xx  system clock configuration File
-  - USB_Host/HID_Standalone/Core/Src/stm32h5xx_it.c                 Interrupt handlers
-  - USB_Host/HIS_Standalone/Core/Src/stm32h5xx_hal_msp.c            HAL MSP Module
-  - USB_Host/HID_Standalone/Core/Inc/main.h                         Main program header File
-  - USB_Host/HID_Standalone/Core/Inc/stm32h5xx_hal_conf.h           HAL configuration File
-  - USB_Host/HID_Standalone/Core/Inc/stm32h5xx_it.h                 Interrupt handlers header File
-  - USB_Host/HID_Standalone/USB_Host/App/usb_host.c                 HID State Machine
-  - USB_Host/HID_Standalone/USB_Host/App/mouse.c                    HID mouse functions File
-  - USB_Host/HID_Standalone/USB_Host/App/keyboard.c                 HID keyboard functions File
-  - USB_Host/HID_Standalone/USB_Host/App/usb_host.h                 HID State Machine Header File
-  - USB_Host/HID_Standalone/USB_Host/App/mouse.h                    HID mouse functions Header File
-  - USB_Host/HID_Standalone/USB_Host/App/keyboard.h                 HID keyboard functions Header File
-  - USB_Host/HID_Standalone/USB_Host/Target/usbh_conf.c             General low level driver configuration
-  - USB_Host/HID_Standalone/USB_Host/Target/usbh_conf.h             USB Host driver configuration File
+    - USB_Host/HID_Standalone/Core/Src/main.c                         Main program
+    - USB_Host/HID_Standalone/Core/Src/system_stm32h5xx.c             STM32H5xx  system clock configuration File
+    - USB_Host/HID_Standalone/Core/Src/stm32h5xx_it.c                 Interrupt handlers
+    - USB_Host/HIS_Standalone/Core/Src/stm32h5xx_hal_msp.c            HAL MSP Module
+    - USB_Host/HID_Standalone/Core/Inc/main.h                         Main program header File
+    - USB_Host/HID_Standalone/Core/Inc/stm32h5xx_hal_conf.h           HAL configuration File
+    - USB_Host/HID_Standalone/Core/Inc/stm32h5xx_it.h                 Interrupt handlers header File
+    - USB_Host/HID_Standalone/USB_Host/App/usb_host.c                 HID State Machine
+    - USB_Host/HID_Standalone/USB_Host/App/mouse.c                    HID mouse functions File
+    - USB_Host/HID_Standalone/USB_Host/App/keyboard.c                 HID keyboard functions File
+    - USB_Host/HID_Standalone/USB_Host/App/usb_host.h                 HID State Machine Header File
+    - USB_Host/HID_Standalone/USB_Host/App/mouse.h                    HID mouse functions Header File
+    - USB_Host/HID_Standalone/USB_Host/App/keyboard.h                 HID keyboard functions Header File
+    - USB_Host/HID_Standalone/USB_Host/Target/usbh_conf.c             General low level driver configuration
+    - USB_Host/HID_Standalone/USB_Host/Target/usbh_conf.h             USB Host driver configuration File
 
-
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
 
   - NUCLEO-H563ZI Set-up
 
     - JP2 must be connected (USB_C position) to provide power to VBUS and to the connected USB device.
-          When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN11.
+          When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN13.
 
     - Plug the USB key into the NUCLEO-H563ZI board through 'USB Type C-Male
-      to A-Female' cable to the connector:CN11
+      to A-Female' cable to the connector:CN13
     - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
 
     A virtual COM port will then appear in the HyperTerminal:
@@ -118,9 +117,10 @@ Connectivity, USB_Host, USB, HID, Human Interface, Mouse, Keyboard
       - BaudRate = 115200 baud
       - Flow control: None
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
+
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Open the configured uart hyperterminal in order to display debug messages.
@@ -128,6 +128,6 @@ In order to make the program work, you must do the following :
  - Open the configured uart hyperterminal in order to display debug messages.
 
 
-#### Notes
+#### <b>Notes</b>
    The user has to check the list of the COM ports in Device Manager to find out the number of the
    COM ports that have been assigned (by OS) to the Stlink VCP .

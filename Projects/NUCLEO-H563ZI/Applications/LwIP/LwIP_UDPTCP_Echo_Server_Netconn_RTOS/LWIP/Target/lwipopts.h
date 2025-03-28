@@ -39,7 +39,7 @@
  * critical regions during buffer allocation, deallocation and memory
  * allocation and deallocation.
  */
-#define SYS_LIGHTWEIGHT_PROT    0
+#define SYS_LIGHTWEIGHT_PROT    1
 
 /**
  * NO_SYS==1: Provides VERY minimal functionality. Otherwise,
@@ -61,7 +61,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define LWIP_RAM_HEAP_POINTER    (0x20084000)
 
 
-/* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
+/* MEMP_NUM_TCP_PCB: the number of simultaneously active TCP
    connections. */
 #define MEMP_NUM_TCP_PCB        10
 
@@ -198,6 +198,35 @@ The STM32H5xx allows computing and verifying the IP, UDP, TCP and ICMP checksums
  * LWIP_NETIF_API==1: Enable NETIF API
  */
 #define LWIP_NETIF_API                     1
+
+/**
+ * LWIP_TCPIP_CORE_LOCKING==1: Enable TCPIP CORE LOCKING
+ *
+ */
+#define LWIP_TCPIP_CORE_LOCKING            1
+
+/*-------------------------------------------------------------------------*/
+/* USER CODE BEGIN 1 */
+/* Set this to 1 if you want to enable multithreading check functions */
+#define LWIP_CHECK_MULTITHREADING          0
+
+#if LWIP_CHECK_MULTITHREADING
+/* Mark the tcpip thread */
+#define LWIP_MARK_TCPIP_THREAD()           sys_mark_tcpip_thread()
+void sys_mark_tcpip_thread(void);
+/* Check core locking */
+#define LWIP_ASSERT_CORE_LOCKED()          sys_check_core_locking()
+void sys_check_core_locking(void);
+/* Lock the tcpip core */
+#if LWIP_TCPIP_CORE_LOCKING
+#define LOCK_TCPIP_CORE()                  sys_lock_tcpip_core()
+void sys_lock_tcpip_core(void);
+/* Unlock the tcpip core */
+#define UNLOCK_TCPIP_CORE()
+void sys_unlock_tcpip_core(void);
+#endif /* LWIP_TCPIP_CORE_LOCKING */
+#endif /* LWIP_CHECK_MULTITHREADING */
+/* USER CODE END 1 */
 
 /*
    ---------------------------------

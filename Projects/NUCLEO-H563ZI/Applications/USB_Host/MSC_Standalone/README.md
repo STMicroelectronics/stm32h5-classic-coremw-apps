@@ -29,7 +29,7 @@ If all operations were successful, a message will be displayed on the HyperTermi
 #### <b>Error behaviors</b>
 
   - Errors are detected (such as unsupported device, enumeration fail, file operations fail) and the corresponding message is displayed on the HyperTerminal.
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 
@@ -72,37 +72,37 @@ File system, Write, Read, Format
 
 #### <b>Directory contents</b>
 
-   - USB_Host/MSC_Standalone/USB_Host/Target/usbh_conf.c           General low level driver configuration
-   - USB_Host/MSC_Standalone/USB_Host/Target/usbh_conf.h           USB Host driver Configuration file
-   - USB_Host/MSC_Standalone/USB_Host/App/explorer.c               Explore the USB flash disk content
-   - USB_Host/MSC_Standalone/USB_Host/App/file_operations.c        Write/read file on the disk
-   - USB_Host/MSC_Standalone/USB_Host/App/usbh_diskio.c            USB diskio interface for FatFs
-   - USB_Host/MSC_Standalone/USB_Host/App/usbh_diskio_config.h     USB diskio interface for FatFs Configuration file
-   - USB_Host/MSC_Standalone/USB_Host/App/usb_host.c               MSC State Machine
-   - USB_Host/MSC_Standalone/Core/Src/main.c                       Main program
-   - USB_Host/MSC_Standalone/Core/Src/system_stm32h5xx.c           STM32H5XX  system clock configuration file
-   - USB_Host/MSC_Standalone/Core/Src/stm32h5xx_it.c               Interrupt handlers
-   - USB_Host/MSC_Standalone/Core/Src/stm32h5xx_hal_msp.c          HAL MSP Module
-   - USB_Host/MSC_Standalone/Core/Inc/main.h                       Main program header file
-   - USB_Host/MSC_Standalone/Core/Inc/stm32h5xx_it.h               Interrupt handlers header file
-   - USB_Host/MSC_Standalone/Core/Inc/stm32h5xx_hal_conf.h         HAL configuration file
-   - USB_Host/MSC_Standalone/Core/Inc/ffconf.h                     FatFs Module Configuration file
+    - USB_Host/MSC_Standalone/USB_Host/Target/usbh_conf.c           General low level driver configuration
+    - USB_Host/MSC_Standalone/USB_Host/Target/usbh_conf.h           USB Host driver Configuration file
+    - USB_Host/MSC_Standalone/USB_Host/App/explorer.c               Explore the USB flash disk content
+    - USB_Host/MSC_Standalone/USB_Host/App/file_operations.c        Write/read file on the disk
+    - USB_Host/MSC_Standalone/USB_Host/App/usbh_diskio.c            USB diskio interface for FatFs
+    - USB_Host/MSC_Standalone/USB_Host/App/usbh_diskio_config.h     USB diskio interface for FatFs Configuration file
+    - USB_Host/MSC_Standalone/USB_Host/App/usb_host.c               MSC State Machine
+    - USB_Host/MSC_Standalone/Core/Src/main.c                       Main program
+    - USB_Host/MSC_Standalone/Core/Src/system_stm32h5xx.c           STM32H5XX  system clock configuration file
+    - USB_Host/MSC_Standalone/Core/Src/stm32h5xx_it.c               Interrupt handlers
+    - USB_Host/MSC_Standalone/Core/Src/stm32h5xx_hal_msp.c          HAL MSP Module
+    - USB_Host/MSC_Standalone/Core/Inc/main.h                       Main program header file
+    - USB_Host/MSC_Standalone/Core/Inc/stm32h5xx_it.h               Interrupt handlers header file
+    - USB_Host/MSC_Standalone/Core/Inc/stm32h5xx_hal_conf.h         HAL configuration file
+    - USB_Host/MSC_Standalone/Core/Inc/ffconf.h                     FatFs Module Configuration file
 
 ### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
 
   - NUCLEO-H563ZI Set-up
 
     - JP2 must be connected (USB_C position) to provide power to VBUS and to the connected USB device.
-          When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN11.
+          When JP2 is ON, the VBUS LED (LD7) turns on to indicate that power is provided to CN13.
 
     - Plug the USB key into the NUCLEO-H563ZI board through 'USB Type C-Male
-      to A-Female' cable to the connector:CN11
+      to A-Female' cable to the connector:CN13
     - Connect ST-Link cable to the PC USB port to display data on the HyperTerminal.
 
     A virtual COM port will then appear in the HyperTerminal:
@@ -114,8 +114,6 @@ File system, Write, Read, Format
       - BaudRate = 115200 baud
       - Flow control: None
 
-<b>Note</b>
-    - JP3 and JP4 : Check USB-PD Jumper is removed in order to provide Vbus 5V.
 
 ### <b>How to use it ?</b>
 

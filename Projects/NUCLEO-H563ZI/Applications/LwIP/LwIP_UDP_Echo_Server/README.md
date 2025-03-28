@@ -1,4 +1,4 @@
-## LwIP_UDP_Echo_Server Application Description
+## <b>LwIP_UDP_Echo_Server Application Description</b>
 
 This application guides STM32Cube HAL API users to run UDP Echo Server application
 based on Raw API of LwIP TCP/IP stack
@@ -28,28 +28,28 @@ all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
 (SYSCLK) to run at 250 MHz.
 
-#### Expected success behavior
+#### <b>Expected success behavior</b>
    - The board's IP address is printed on the HyperTerminal
    - LED_YELLOW is ON indicating the ethernet cable is connected.
    - If the echotool utility is used the state of the replies sent by the UDP server are displayed on the PC console.
 
-#### Error behaviors
+#### <b>Error behaviors</b>
    - LED_RED is ON indicating the ethernet cable is not connected.
-   - LED_RED is toggling to indicate a critical error has occured.
+   - LED_RED is toggling to indicate a critical error has occurred.
    - The error message is printed on the HyperTerminal.
 
-#### Assumptions if any
+#### <b>Assumptions if any</b>
    - If the Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in
    the LAN used to test the application.
    - The application is configuring the Ethernet IP with a static predefined MAC Address, make sure to change it in case
    multiple boards are connected on the same LAN to avoid any potential network traffic issues.
    - The MAC Address is defined in the stm32h5xx_hal_conf.h
 
-#### Known limitations
+#### <b>Known limitations</b>
 None
 
 
-#### Notes
+#### <b>Notes</b>
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -62,34 +62,34 @@ None
 
 For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo server, UART,
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/App/app_ethernet.h         header of app_ethernet.c file
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/ethernetif.h        header for ethernetif.c file
-  - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_hal_conf.h        HAL configuration file
-  - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_it.h              STM32 interrupt handlers header file
-  - LwIP/LwIP_UDP_Echo_Server/Inc/main.h                      Main program header file
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/lwipopts.h          LwIP stack configuration options
-  - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_nucleo_conf.h     NUCLEO-H563ZI configuration file
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/App/udp_echoserver.h       Header for udp echoserver application
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/App/app_ethernet.c         Ethernet specific module
-  - LwIP/LwIP_UDP_Echo_Server/Src/stm32h5xx_it.c              STM32 interrupt handlers
-  - LwIP/LwIP_UDP_Echo_Server/Src/main.c                      Main program
-  - LwIP/LwIP_UDP_Echo_Server/Src/system_stm32h5xx.c          STM32H5xx system clock configuration file
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/ethernetif.c        Interfacing LwIP to ETH driver
-  - LwIP/LwIP_UDP_Echo_Server/LWIP/App/udp_echoserver.c       udp echoserver application
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/App/app_ethernet.h         header of app_ethernet.c file
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/ethernetif.h        header for ethernetif.c file
+    - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_hal_conf.h        HAL configuration file
+    - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_it.h              STM32 interrupt handlers header file
+    - LwIP/LwIP_UDP_Echo_Server/Inc/main.h                      Main program header file
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/lwipopts.h          LwIP stack configuration options
+    - LwIP/LwIP_UDP_Echo_Server/Inc/stm32h5xx_nucleo_conf.h     NUCLEO-H563ZI configuration file
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/App/udp_echoserver.h       Header for udp echoserver application
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/App/app_ethernet.c         Ethernet specific module
+    - LwIP/LwIP_UDP_Echo_Server/Src/stm32h5xx_it.c              STM32 interrupt handlers
+    - LwIP/LwIP_UDP_Echo_Server/Src/main.c                      Main program
+    - LwIP/LwIP_UDP_Echo_Server/Src/system_stm32h5xx.c          STM32H5xx system clock configuration file
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/Target/ethernetif.c        Interfacing LwIP to ETH driver
+    - LwIP/LwIP_UDP_Echo_Server/LWIP/App/udp_echoserver.c       udp echoserver application
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
      - echotool: (http://bansky.net/echotool/) is used as echo client that sends
        data to the server and checking whether they came back
      - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
@@ -109,7 +109,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo server, UART,
     - PC must share the same LAN network configuration with the NUCLEO-H563ZI board
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

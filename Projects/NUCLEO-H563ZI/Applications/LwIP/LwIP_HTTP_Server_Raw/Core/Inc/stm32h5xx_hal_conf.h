@@ -258,8 +258,8 @@
 #define ETH_MAC_ADDR1    ((uint8_t)0x80)
 #define ETH_MAC_ADDR2    ((uint8_t)0xE1)
 #define ETH_MAC_ADDR3    ((uint8_t)0x00)
-#define ETH_MAC_ADDR4    ((uint8_t)0x00)
-#define ETH_MAC_ADDR5    ((uint8_t)0x66)
+#define ETH_MAC_ADDR4    ((uint8_t)0x05)
+#define ETH_MAC_ADDR5    ((uint8_t)0x77)
 
 /* ############################################ SPI peripheral configuration ######################################## */
 

@@ -82,7 +82,7 @@
 #define HAL_TIM_MODULE_ENABLED
 /*#define HAL_RAMCFG_MODULE_ENABLED */
 #define HAL_UART_MODULE_ENABLED
-#define HAL_USART_MODULE_ENABLED
+/*#define HAL_USART_MODULE_ENABLED */
 /*#define HAL_WWDG_MODULE_ENABLED */
 /*#define HAL_PSSI_MODULE_ENABLED */
 #define HAL_ICACHE_MODULE_ENABLED
@@ -250,7 +250,7 @@
 #define  USE_HAL_USART_REGISTER_CALLBACKS     0U    /* USART register callback disabled     */
 #define  USE_HAL_WWDG_REGISTER_CALLBACKS      0U    /* WWDG register callback disabled      */
 #define  USE_HAL_XSPI_REGISTER_CALLBACKS      0U    /* XSPI register callback disabled      */
- /* ########################### Ethernet Configuration ######################### */
+/* ########################### Ethernet Configuration ######################### */
 #define ETH_TX_DESC_CNT         4U  /* number of Ethernet Tx DMA descriptors */
 #define ETH_RX_DESC_CNT         4U  /* number of Ethernet Rx DMA descriptors */
 

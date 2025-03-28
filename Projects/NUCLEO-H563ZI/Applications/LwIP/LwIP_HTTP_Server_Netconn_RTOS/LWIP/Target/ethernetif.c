@@ -105,8 +105,6 @@ osSemaphoreId_t TxPktSemaphore = NULL;   /* Semaphore to signal transmit packet 
 
 /* Global Ethernet handle */
 ETH_HandleTypeDef EthHandle;
-ETH_TxPacketConfig TxConfig;
-
 
 /* Private function prototypes -----------------------------------------------*/
 static void ethernetif_input( void *argument );
@@ -174,12 +172,6 @@ static void low_level_init(struct netif *netif)
 
   /* Initialize the RX POOL */
   LWIP_MEMPOOL_INIT(RX_POOL);
-
-  /* Set Tx packet config common parameters */
-  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfig));
-  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
-  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
-  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
 
   /* create a binary semaphore used for informing ethernetif of frame reception */
   RxPktSemaphore = xSemaphoreCreateBinary();
@@ -264,8 +256,15 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
   struct pbuf *q = NULL;
   err_t errval = ERR_OK;
   ETH_BufferTypeDef Txbuffer[ETH_TX_DESC_CNT];
+  ETH_TxPacketConfig TxConfig;
 
   memset(Txbuffer, 0 , ETH_TX_DESC_CNT*sizeof(ETH_BufferTypeDef));
+
+  /* Set Tx packet config common parameters */
+  memset(&TxConfig, 0 , sizeof(ETH_TxPacketConfig));
+  TxConfig.Attributes = ETH_TX_PACKETS_FEATURES_CSUM | ETH_TX_PACKETS_FEATURES_CRCPAD;
+  TxConfig.ChecksumCtrl = ETH_CHECKSUM_IPHDR_PAYLOAD_INSERT_PHDR_CALC;
+  TxConfig.CRCPadCtrl = ETH_CRC_PAD_INSERT;
 
   for(q = p; q != NULL; q = q->next)
   {

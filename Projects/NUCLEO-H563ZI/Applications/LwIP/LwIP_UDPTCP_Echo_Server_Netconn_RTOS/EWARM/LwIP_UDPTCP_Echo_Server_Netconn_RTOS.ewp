@@ -310,7 +310,7 @@
                 </option>
                 <option>
                     <name>CCRequirePrototypes</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>CCDiagWarnAreErr</name>
@@ -351,7 +351,6 @@
                     <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\LwIP\system</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\..\Drivers\CMSIS\RTOS2\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM33_NTZ\non_secure</state>
-                    <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS_V2</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\FreeRTOS\Source\include</state>
                     <state>$PROJ_DIR$\..\LWIP\App</state>
                     <state>$PROJ_DIR$\..\LWIP\Target</state>
@@ -1321,6 +1320,9 @@
                 <name>Core</name>
                 <group>
                     <name>IPv4</name>
+                    <file>
+                        <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\LwIP\src\core\ipv4\acd.c</name>
+                    </file>
                     <file>
                         <name>$PROJ_DIR$\..\..\..\..\..\..\Middlewares\Third_Party\LwIP\src\core\ipv4\autoip.c</name>
                     </file>

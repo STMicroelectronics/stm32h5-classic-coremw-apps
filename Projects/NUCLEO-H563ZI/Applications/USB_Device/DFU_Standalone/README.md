@@ -32,7 +32,7 @@ Once the STM32H563xx USB device successfully completed the enumeration phase, op
 
 #### <b>Error behaviors</b>
 
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
   - Host PC shows that USB device does not appear as DFU device.
 
 #### <b>Assumptions if any</b>
@@ -43,7 +43,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" specification and DFU class
 
 None
 
-#### Notes
+#### <b>Notes</b>
  1. After each device reset (unplug the NUCLEO-H563ZI board from PC), Plug the NUCLEO-H563ZI board with Key USER push-button button
 pressed to enter the DFU mode.
 
@@ -62,7 +62,7 @@ pressed to enter the DFU mode.
       detection. The correct way to detect the USB cable plug/unplug is to detect the availability of the VBUS line
       using a normal GPIO pin (external interrupt line).
 
-### USB Library Configuration
+### <b>USB Library Configuration</b>
 
 
 It is possible to fine tune needed USB Device features by modifying defines values in USBD configuration
@@ -72,24 +72,24 @@ requirements, such as:
 
 Device's end address is the end address of the flash memory and it is dependent on the device in use.
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, USB_Device, USB, DFU, Firmware upgrade
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on stm32h5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     board and can be easily tailored to any other supported device
     and development board.
 
   - NUCLEO-H563ZI  board Set-up
     Connect the NUCLEO-H563ZI board  to the PC through micro A-Male to standard A Male cable connected to the connector
-    CN11  : to use USB Full speed (FS), Make sure that JP2 is fitted in USB-C position.
+    CN13.
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following:
 

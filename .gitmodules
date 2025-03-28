@@ -34,3 +34,15 @@
 	path = Middlewares/Third_Party/FatFs
 	url = https://github.com/STMicroelectronics/stm32_mw_fatfs.git
 	branch = master
+[submodule "Drivers/BSP/STM32H573I-DK"]
+	path = Drivers/BSP/STM32H573I-DK
+	url = https://github.com/STMicroelectronics/stm32h573i-discovery-bsp.git
+	branch = main
+[submodule "Drivers/BSP/Components/tcpp0203"]
+	path = Drivers/BSP/Components/tcpp0203
+	url = https://github.com/STMicroelectronics/stm32-tcpp0203.git
+	branch = main
+[submodule "Middlewares/Third_Party/FreeRTOS"]
+	path = Middlewares/Third_Party/FreeRTOS
+	url = https://github.com/STMicroelectronics/stm32-mw-freertos.git
+	branch = master

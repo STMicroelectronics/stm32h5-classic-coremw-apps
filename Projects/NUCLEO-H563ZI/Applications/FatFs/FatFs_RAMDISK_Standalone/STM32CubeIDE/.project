@@ -55,7 +55,7 @@
 		<link>
 			<name>Drivers/CMSIS/system_stm32h5xx.c</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC//Core/Src/system_stm32h5xx.c</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/system_stm32h5xx.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32H5xx_HAL_Driver/stm32h5xx_hal.c</name>

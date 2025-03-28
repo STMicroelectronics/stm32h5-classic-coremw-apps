@@ -1,4 +1,4 @@
-## HID_Standalone Application Description
+## <b>HID_Standalone Application Description</b>
 
 Use of the USB device application based on the Human Interface (HID).
 
@@ -21,7 +21,7 @@ Each report sent should move the mouse cursor by one step on host side.
 
 #### <b>Error behaviors</b>
 
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 
@@ -31,7 +31,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" specification and HID class
 
 None
 
-#### Notes
+#### <b>Notes</b>
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -44,25 +44,23 @@ None
 For more details about the STM32Cube USB Device library, please refer to UM1734
 "STM32Cube USB Device library".
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, USB_Device, USB, HID, Full Speed, Mouse, Remote Wakeup
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
   - NUCLEO-H563ZI board Set-up
-    - Connect the NUCLEO-H563ZI board CN11 to the PC through "TYPE-C" to "Standard A" cable.
+    - Connect the NUCLEO-H563ZI board CN13 to the PC through "TYPE-C" to "Standard A" cable.
     - Press the User push-button  to move the cursor.
 
-
-
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

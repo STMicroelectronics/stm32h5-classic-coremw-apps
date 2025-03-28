@@ -1,4 +1,4 @@
-## LwIP_TCP_Echo_Client Application Description
+## <b>LwIP_TCP_Echo_Client Application Description</b>
 
 This application guides STM32Cube HAL API users to run TCP Echo Client application
 based on Raw API of LwIP TCP/IP stack
@@ -22,25 +22,25 @@ all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
 (SYSCLK) to run at 240 MHz.
 
-#### Expected success behavior
+#### <b>Expected success behavior</b>
 
    - The board's IP address is printed on the HyperTerminal
    - LED_YELLOW is ON indicating the ethernet cable is connected.
    - the client sends an TCP message after a user button press, the message is displayed on the echotool PC console.
 
-#### Error behaviors
+#### <b>Error behaviors</b>
 
    - LED_RED is ON indicating the ethernet cable is not connected.
-   - LED_RED is toggling to indicate a critical error has occured.
+   - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 
 None
 
-#### Known limitations
+#### <b>Known limitations</b>
 None
 
-#### Notes
+#### <b>Notes</b>
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -52,34 +52,34 @@ None
 
 For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications"
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo Client, UART,
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/App/app_ethernet.h          header of app_ethernet.c file
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/ethernetif.h         header for ethernetif.c file
-  - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
-  - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
-  - LwIP/LwIP_TCP_Echo_Client/Core/Inc/main.h                  Main program header file
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/lwipopts.h           LwIP stack configuration options
-  - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_nucleo_conf.h NUCLEO-H563ZI configuration file
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/App/tcp_echoclien.h         Header for tcp echoserver application
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/App/app_ethernet.c          Ethernet specific module
-  - LwIP/LwIP_TCP_Echo_Client/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
-  - LwIP/LwIP_TCP_Echo_Client/Core/Src/main.c                  Main program
-  - LwIP/LwIP_TCP_Echo_Client/Core/Src/system_stm32h5xx.c      STM32H5xx system clock configuration file
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
-  - LwIP/LwIP_TCP_Echo_Client/LWIP/App/tcp_echoclient.c        tcp echoserver application
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/App/app_ethernet.h          header of app_ethernet.c file
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/ethernetif.h         header for ethernetif.c file
+    - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
+    - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
+    - LwIP/LwIP_TCP_Echo_Client/Core/Inc/main.h                  Main program header file
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/lwipopts.h           LwIP stack configuration options
+    - LwIP/LwIP_TCP_Echo_Client/Core/Inc/stm32h5xx_nucleo_conf.h NUCLEO-H563ZI configuration file
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/App/tcp_echoclient.h         Header for tcp echoserver application
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/App/app_ethernet.c          Ethernet specific module
+    - LwIP/LwIP_TCP_Echo_Client/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
+    - LwIP/LwIP_TCP_Echo_Client/Core/Src/main.c                  Main program
+    - LwIP/LwIP_TCP_Echo_Client/Core/Src/system_stm32h5xx.c      STM32H5xx system clock configuration file
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
+    - LwIP/LwIP_TCP_Echo_Client/LWIP/App/tcp_echoclient.c        tcp echoserver application
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
      - echotool: (http://bansky.net/echotool/) is used as echo server that sends
      - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
@@ -98,7 +98,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo Client, UART,
     - PC must share the same LAN network configuration with the NUCLEO-H563ZI board
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

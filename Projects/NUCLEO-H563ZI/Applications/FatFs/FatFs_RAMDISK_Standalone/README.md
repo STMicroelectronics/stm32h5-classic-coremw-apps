@@ -1,4 +1,4 @@
-## FatFs_RAMDISK_Standalone Application Description
+## <b>FatFs_RAMDISK_Standalone Application Description</b>
 
 How to use STM32Cube firmware with FatFs middleware component as a generic FAT
 file system module. This example develops an application that exploits FatFs
@@ -35,22 +35,21 @@ directory, in a way to fit the application requirements.
 
 the user will be notified about the application status with the LEDs.
 
-#### Expected success behavior
+#### <b>Expected success behavior</b>
   - LED_GREEN is Toggling to indicate the application is running successfully.
   - Text file has been created and data was written correctly on RAM.
 
-#### Error behaviors
-   - LED_RED is toggling to indicate an error has occured.
+#### <b>Error behaviors</b>
+   - LED_RED is toggling to indicate an error has occurred.
 
 
-#### Assumptions if any
+#### <b>Assumptions if any</b>
 None
 
-#### Known limitations
+#### <b>Known limitations</b>
 None
 
-
-#### Notes
+#### <b>Notes</b>
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -60,32 +59,32 @@ None
  2. The application needs to ensure that the SysTick time base is always set to 1 millisecond
       to have correct HAL operation.
 
-### Keywords
+### <b>Keywords</b>
 
 FatFs, Ramdisk, File system, FAT Volume, Format, Mount, Read, Write,
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/stm32h5xx_hal_conf.h                HAL configuration file
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/stm32h5xx_it.h                      Interrupt handlers header file
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/main.h                              Header for main.c module
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Src/stm32h5xx_it.c                      Interrupt handlers
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Src/main.c                              Main program
-  - FatFs/FatFs_RAMDISK_Standalone/Core/Src/system_stm32h5xx.c                  STM32H5xx system source file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/Target/ffconf.h                        FAT file system module configuration file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/sram_diskio_config.h               Sram diskio configuration file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.h                        Header file for App_fatfs.c file
-  - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.c                        FatFs application code
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/stm32h5xx_hal_conf.h                HAL configuration file
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/stm32h5xx_it.h                      Interrupt handlers header file
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Inc/main.h                              Header for main.c module
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Src/stm32h5xx_it.c                      Interrupt handlers
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Src/main.c                              Main program
+    - FatFs/FatFs_RAMDISK_Standalone/Core/Src/system_stm32h5xx.c                  STM32H5xx system source file
+    - FatFs/FatFs_RAMDISK_Standalone/FATFS/Target/ffconf.h                        FAT file system module configuration file
+    - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/sram_diskio_config.h               Sram diskio configuration file
+    - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.h                        Header file for App_fatfs.c file
+    - FatFs/FatFs_RAMDISK_Standalone/FATFS/App/app_fatfs.c                        FatFs application code
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices
 
-  - This application has been tested with NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03 board and can be
+  - This application has been tested with NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01 board and can be
     easily tailored to any other supported device and development board.
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following:
 

@@ -1,4 +1,4 @@
-## LwIP_UDP_Echo_Client Application Description
+## <b>LwIP_UDP_Echo_Client Application Description</b>
 
 This application guides STM32Cube HAL API users to run UDP Echo Client application
 based on Raw API of LwIP TCP/IP stack
@@ -23,20 +23,20 @@ all the peripherals, initialize the Flash interface and the systick.
 Then the SystemClock_Config() function is used to configure the system clock
 (SYSCLK) to run at 250 MHz.
 
-#### Expected success behavior
+#### <b>Expected success behavior</b>
    - The board's IP address is printed on the HyperTerminal
    - The response messages with the correct message count are printed on the HyerTerminal
-   - LED_GREEN is ON indicating the message sent from the server was received successfuly.
+   - LED_GREEN is ON indicating the message sent from the server was received successfully.
    - LED_YELLOW is ON indicating the ethernet cable is connected.
    - If the echotool utility is used the message sent by the client are displayed on the PC console.
 
-#### Error behaviors
+#### <b>Error behaviors</b>
    - LED_RED is ON indicating the ethernet cable is not connected.
-   - LED_RED is toggling to indicate a critical error has occured.
+   - LED_RED is toggling to indicate a critical error has occurred.
    - The error message is printed on the HyperTerminal.
    - The response messages with the correct message count are not printed on the HyerTerminal
 
-#### Assumptions if any
+#### <b>Assumptions if any</b>
    - If the Application is using the DHCP to acquire IP address, thus a DHCP server should be reachable by the board in
    the LAN used to test the application.
    - The application is configuring the Ethernet IP with a static predefined MAC Address, make sure to change it in case
@@ -45,11 +45,11 @@ Then the SystemClock_Config() function is used to configure the system clock
    - Make sure to change the destination IP address configuration to match the remote PC's IP address.
    - The destination IP address configuration is defined in main.h
 
-#### Known limitations
+#### <b>Known limitations</b>
 None
 
 
-#### Notes
+#### <b>Notes</b>
  1. Care must be taken when using HAL_Delay(), this function provides accurate delay (in milliseconds)
       based on variable incremented in SysTick ISR. This implies that if HAL_Delay() is called from
       a peripheral ISR process, then the SysTick interrupt must have higher priority (numerically lower)
@@ -61,34 +61,34 @@ None
 
 For more details about this application, refer to UM1713 "STM32Cube interfacing with LwIP and applications"
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo Client, UART,
 
-### Directory contents
+### <b>Directory contents</b>
 
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/App/app_ethernet.h          header of app_ethernet.c file
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/ethernetif.h         header for ethernetif.c file
-  - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
-  - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
-  - LwIP/LwIP_UDP_Echo_Client/Core/Inc/main.h                  Main program header file
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/lwipopts.h           LwIP stack configuration options
-  - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_nucleo_conf.h NUCLEO-H563ZI configuration file
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/App/udp_echoclient.h        Header for udp echoclient application
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/App/app_ethernet.c          Ethernet specific module
-  - LwIP/LwIP_UDP_Echo_Client/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
-  - LwIP/LwIP_UDP_Echo_Client/Core/Src/main.c                  Main program
-  - LwIP/LwIP_UDP_Echo_Client/Core/Src/system_stm32h5xx.c      STM32H5xx system clock configuration file
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
-  - LwIP/LwIP_UDP_Echo_Client/LWIP/App/udp_echoclient.c        udp echoclient application
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/App/app_ethernet.h          header of app_ethernet.c file
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/ethernetif.h         header for ethernetif.c file
+    - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_hal_conf.h    HAL configuration file
+    - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_it.h          STM32 interrupt handlers header file
+    - LwIP/LwIP_UDP_Echo_Client/Core/Inc/main.h                  Main program header file
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/lwipopts.h           LwIP stack configuration options
+    - LwIP/LwIP_UDP_Echo_Client/Core/Inc/stm32h5xx_nucleo_conf.h NUCLEO-H563ZI configuration file
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/App/udp_echoclient.h        Header for udp echoclient application
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/App/app_ethernet.c          Ethernet specific module
+    - LwIP/LwIP_UDP_Echo_Client/Core/Src/stm32h5xx_it.c          STM32 interrupt handlers
+    - LwIP/LwIP_UDP_Echo_Client/Core/Src/main.c                  Main program
+    - LwIP/LwIP_UDP_Echo_Client/Core/Src/system_stm32h5xx.c      STM32H5xx system clock configuration file
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/Target/ethernetif.c         Interfacing LwIP to ETH driver
+    - LwIP/LwIP_UDP_Echo_Client/LWIP/App/udp_echoclient.c        udp echoclient application
 
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H563xx devices.
 
   - This application has been tested with the following environments:
-     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+     - NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
      - echotool: (http://bansky.net/echotool/) is used as echo server that sends back every incoming data.
      - DHCP server:  PC utility TFTPD32 (http://tftpd32.jounin.net/) is used as a DHCP server
 
@@ -107,7 +107,7 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo Client, UART,
     - PC must share the same LAN network configuration with the NUCLEO-H563ZI board
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
 In order to make the program work, you must do the following :
 

@@ -1,4 +1,4 @@
-## CDC_Standalone Application Description
+## <b>CDC_Standalone Application Description</b>
 
 This application describes how to use USB device application based on the Device
 Communication Class (CDC) following the PSTN sub-protocol on the NUCLEO-H563ZI devices.
@@ -6,6 +6,7 @@ Communication Class (CDC) following the PSTN sub-protocol on the NUCLEO-H563ZI d
 This example is part of the USB Device Library package using STM32Cube firmware.
 This is a typical application on how to use the STM32H5xx USB Device peripheral where the STM32 MCU
 behaves as a USB-to-UART bridge following the Virtual COM Port (VCP) implementation.
+
  - On one side, the STM32 exchanges data with a PC host through USB interface in Device mode.
  - On the other side, the STM32 exchanges data with other devices (same host, other host,
    other devices...).
@@ -47,7 +48,7 @@ open two hyperterminals (USB com port and UART com port(USB STLink VCP)) to send
 
 #### <b>Error behaviors</b>
 
-  - LED_RED is toggling to indicate a critical error has occured.
+  - LED_RED is toggling to indicate a critical error has occurred.
 
 #### <b>Assumptions if any</b>
 
@@ -57,7 +58,7 @@ User is familiar with USB 2.0 "Universal Serial BUS" specification and CDC class
 
 None
 
-#### Notes
+#### <b>Notes</b>
  1. Receiving data over UART is handled by interrupt while transmitting is handled by DMA allowing
       hence the application to receive data at the same time it is transmitting another data (full- 
       duplex feature).
@@ -102,21 +103,21 @@ and with baudrates higher than 9600, there might be communication errors.
 For more details about the STM32Cube USB Device library, please refer to UM1734
 "STM32Cube USB Device library".
 
-### Keywords
+### <b>Keywords</b>
 
 Connectivity, USB_Device, USB, CDC, Virtual COM Port
 
-### Hardware and Software environment
+### <b>Hardware and Software environment</b>
 
   - This application runs on STM32H5xx devices.
 
-  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-A03
+  - This application has been tested with STMicroelectronics NUCLEO-H563ZI boards Revision: MB1404-H563ZI-C01
     and can be easily tailored to any other supported device and development board.
 
   - NUCLEO-H563ZI board Set-up
-    - Connect the NUCLEO-H563ZI board CN14 to the PC through "TYPE-C" to "Standard A" cable.
+    - Connect the NUCLEO-H563ZI board CN1 to the PC through "TYPE-C" to "Standard A" cable.
     - Connect the NUCLEO-H563ZI board to the PC (or to another evaluation board) through USART
-      serial cable CN1 connector.
+      serial cable CN13 connector.
     - For loopback mode test: connect directly USART TX and RX pins:
       PD8 and PD9
 
@@ -132,9 +133,10 @@ Connectivity, USB_Device, USB, CDC, Virtual COM Port
     - Flow control = None
 
 
-### How to use it ?
+### <b>How to use it ?</b>
 
-In order to make the program work, you must do the following :
+In order to make the program work, you must do the following:
+
  - Open your preferred toolchain
  - Rebuild all files and load your image into target memory
  - Run the application

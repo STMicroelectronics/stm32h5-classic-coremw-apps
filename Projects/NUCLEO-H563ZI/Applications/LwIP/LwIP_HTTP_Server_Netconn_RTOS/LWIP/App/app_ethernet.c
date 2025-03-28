@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    LwIP/LwIP_HTTP_Server_Netconn_RTOS/LWIP/App/app_ethernet.c
   * @author  MCD Application Team
-  * @brief   Ethernet specefic module
+  * @brief   Ethernet specific module
   ******************************************************************************
   * @attention
   *

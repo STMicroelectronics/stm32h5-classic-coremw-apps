@@ -54,7 +54,7 @@ a lot of data that needs to be copied, this should be set high. */
 #define MEM_SIZE                (14*1024)
 /* Relocate the LwIP RAM heap pointer */
 #define LWIP_RAM_HEAP_POINTER    (0x20084000)
-/* MEMP_NUM_TCP_PCB: the number of simulatenously active TCP
+/* MEMP_NUM_TCP_PCB: the number of simultaneously active TCP
    connections. */
 #define MEMP_NUM_TCP_PCB        10
 /* MEMP_NUM_TCP_SEG: the number of simultaneously queued TCP
