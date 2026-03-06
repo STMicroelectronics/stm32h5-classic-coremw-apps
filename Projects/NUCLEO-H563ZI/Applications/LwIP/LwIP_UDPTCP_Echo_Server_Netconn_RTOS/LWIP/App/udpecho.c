@@ -19,7 +19,7 @@
 #include "udpecho.h"
 #include "lwip/opt.h"
 #include "FreeRTOS.h"
-
+#include <string.h>
 
 
 #if LWIP_NETCONN
@@ -41,6 +41,7 @@ udpecho_thread(void *arg)
   struct netbuf *buf, *tx_buf;
   err_t err;
   LWIP_UNUSED_ARG(arg);
+  char   data[100] = {'\0'};
 
   conn = netconn_new(NETCONN_UDP);
   netconn_bind(conn, IP_ADDR_ANY, 7);
@@ -51,6 +52,10 @@ udpecho_thread(void *arg)
     err = netconn_recv(conn, &buf);
 
     if (err == ERR_OK) {
+
+      /* Print received data */
+      strncpy(data, buf->p->payload, buf->p->len);
+      printf("%s \n", data);
 
       tx_buf = netbuf_new();
       netbuf_alloc(tx_buf, buf->p->tot_len);

@@ -22,6 +22,7 @@
 #include "lwip/debug.h"
 #include "lwip/stats.h"
 #include "lwip/tcp.h"
+#include <string.h>
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -154,6 +155,7 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
 {
   struct tcp_echoserver_struct *es;
   err_t ret_err;
+  char   data[100] = {'\0'};
 
   LWIP_ASSERT("arg != NULL",arg != NULL);
 
@@ -196,6 +198,10 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     /* first data chunk in p->payload */
     es->state = ES_RECEIVED;
 
+    /* print received data */
+    strncpy(data, p->payload, p->len);
+    printf("%s \n", data);
+
     /* store reference to incoming pbuf (chain) */
     es->p = p;
 
@@ -213,6 +219,10 @@ static err_t tcp_echoserver_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p
     if(es->p == NULL)
     {
       es->p = p;
+
+      /* print received data */
+      strncpy(data, p->payload, p->len);
+      printf("%s \n", data);
 
       /* send back received data */
       tcp_echoserver_send(tpcb, es);

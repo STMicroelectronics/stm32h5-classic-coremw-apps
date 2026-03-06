@@ -114,7 +114,7 @@ void udp_echoclient_send(void)
 void udp_receive_callback(void *arg, struct udp_pcb *upcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
   /* notify the user*/
-  printf("Received %d message(s) from UDP server\r\n",message_count);
+  printf("Received %lu message(s) from UDP server\r\n",(uint32_t)message_count);
   BSP_LED_On(LED_GREEN);
 
   /*increment message count */

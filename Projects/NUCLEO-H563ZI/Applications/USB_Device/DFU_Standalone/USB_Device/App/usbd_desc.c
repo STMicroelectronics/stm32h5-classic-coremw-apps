@@ -70,8 +70,6 @@
 
 #if (USBD_CLASS_USER_STRING_DESC == 1U)
 #define USBD_DFU_STRING_DEVICE_FLASH_DESC_INDEX    0x06U
-#define USBD_DFU_STRING_DEVICE_ID_DESC_INDEX       0x14U
-#define USBD_DFU_STRING_DEVICE_ID_DESC             "@Device ID/0x484,@Revision ID/0x0001"
 #endif /* (USBD_CLASS_USER_STRING_DESC == 1U) */
 
 /* USER CODE BEGIN PRIVATE_DEFINES */
@@ -350,10 +348,7 @@ uint8_t * USBD_DFU_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *len
   */
 uint8_t *USBD_DFU_GetUserStrDescriptor(USBD_SpeedTypeDef speed, uint8_t idx, uint16_t *length)
 {
-  if (idx == USBD_DFU_STRING_DEVICE_ID_DESC_INDEX)
-  {
-    USBD_GetString((uint8_t *) USBD_DFU_STRING_DEVICE_ID_DESC, USBD_StrDesc, length);
-  }
+  UNUSED(speed);
 
   if (idx == USBD_DFU_STRING_DEVICE_FLASH_DESC_INDEX)
   {

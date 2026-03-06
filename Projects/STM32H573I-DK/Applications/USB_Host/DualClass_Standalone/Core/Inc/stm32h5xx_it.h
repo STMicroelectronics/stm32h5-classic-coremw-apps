@@ -58,7 +58,7 @@ void USB_DRD_FS_IRQHandler(void);
 void SysTick_Handler(void);
 void UCPD1_IRQHandler(void);
 /* USER CODE BEGIN EFP */
-
+void EXTI1_IRQHandler(void);
 /* USER CODE END EFP */
 
 #ifdef __cplusplus

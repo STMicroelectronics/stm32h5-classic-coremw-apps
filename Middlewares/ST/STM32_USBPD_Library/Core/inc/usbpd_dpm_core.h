@@ -78,5 +78,4 @@ __WEAK void         USBPD_DPM_ErrorHandler(void);
 }
 #endif
 
-#endif /* __USBPD_DPM_H_ */
-
+#endif /* __USBPD_DPM_CORE_H_ */

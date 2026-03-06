@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Release Notes for STM32H5 Classic Core Middleware</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="_htmresc/mini-st_2020.css" />
+  <link rel="icon" type="image/x-icon" href="_htmresc/favicon.png" />
+</head>
+<body>
+<div class="row">
+<div class="col-sm-12 col-lg-4">
+<center>
+<h1
+id="release-notes-for-stm32h5-classic-core-middleware-package">Release
+Notes for STM32H5 Classic Core Middleware package</h1>
+<p>Copyright © 2023 STMicroelectronics<br />
+</p>
+<a href="https://www.st.com" class="logo"><img
+src="_htmresc/st_logo_2020.png" alt="ST logo" /></a>
+</center>
+<h1 id="purpose">Purpose</h1>
+<p>With Classic Core Middleware complementing the extensive STM32Cube
+ecosystem providing free development tools, software bricks, and
+software expansion packages, STM32 users can also leverage the rich
+services of Classic Core Middleware, which meet the needs of tiny,
+smart, connected devices.</p>
+<p><strong>stm32h5-classic-coremw-apps</strong> (Classic Core Middleware
+Software Expansion for STM32Cube) provides an integration of
+<strong>Classic Core Middleware</strong> in the STM32Cube environment
+for the STM32H5 series of microcontrollers. Ready-to-run applicative
+examples are also provided for the <em>NUCLEO-H563ZI</em> and
+<em>STM32H573I-DK</em> boards, thus <strong>reducing the learning
+curve</strong> and ensuring a <strong>smooth application development
+experience</strong> with Classic Core Middleware and STM32H5 MCUs.</p>
+<p>The scope of this package covers the following Middlewares: USB
+Device and Host, LwIP, File System(FatFS).</p>
+<p>This package covers the following middlewares:</p>
+<ul>
+<li><strong>USB Device/Host</strong>: Classic USB stacks.</li>
+<li><strong>FatFS</strong>: File System for external memory file
+management.</li>
+<li><strong>LwIP</strong>: Lightweight TCP/IP stack offering Ethernet
+connectivity and support for essential Internet protocols.</li>
+</ul>
+<h1 id="repository-structure">Repository structure</h1>
+<p>The STMicroelectronics Classic Core Middleware STM32H5 repository
+consists of the following repositories:</p>
+<ul>
+<li><strong>Drivers</strong>: contains STM32H5 CMSIS, HAL and BSP
+drivers</li>
+<li><strong>Middlewares</strong>: FreeRTOS, FatFS, LwIP, USB
+Device/Host</li>
+<li><strong>Projects</strong>: Application examples for supported
+boards. Projects are structured as follows:</li>
+</ul>
+<p><img src="_htmresc/Classic_CoreMW_Projects_Structure.png" /></p>
+<h1 id="documentation">Documentation</h1>
+<p>More comprehensive documentation is available on STM32 <a
+href="https://wiki.st.com/stm32mcu/index.php?title=Introduction_to_Azure_RTOS_with_STM32&amp;sfr=stm32mcu#STM32_Classic_CoreMW">MCU
+Wiki</a>.</p>
+</div>
+<div class="column" style="width:60%;">
+<h1 id="update-history">Update history</h1>
+<div class="collapse">
+<input type="checkbox" id="collapse-section4" aria-hidden="false" checked>
+<label for="collapse-section4" aria-hidden="false"><strong>V2.1.0 /
+20-February-2026</strong></label>
+<div>
+<h2 id="main-changes">Main changes</h2>
+<ul>
+<li>Maintenance release of STM32H5 Classic Core Middleware package.</li>
+<li>Add STM32CubeIDE projects for all applications</li>
+</ul>
+<h2 id="contents">Contents</h2>
+<h3 id="applications">Applications</h3>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr>
+<th>Application</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FatFs_RAMDISK_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/FatFs/FatFs_RAMDISK_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDPTCP_Echo_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDPTCP_Echo_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Socket_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Socket_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Raw</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Raw/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DFU_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/DFU_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_uSD_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_uSD_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_MultiAccess</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_MultiAccess/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TFTP_Server</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/LwIP/LwIP_TFTP_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Device/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DualClass_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Host/DualClass_Standalone/readme.html">readme</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares">Middlewares</h3>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>License</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FreeRTOS</strong></td>
+<td>V11.2.0</td>
+<td>MIT</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/readme.txt">release
+notes</a> ST modified 20250620 <a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>FatFS</strong></td>
+<td>R0.15</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/documents/updates.html">release
+notes</a> ST modified 20241220 <a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>LwIP</strong></td>
+<td>2.2.1</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/CHANGELOG">release
+notes</a> ST modified 20250804 <a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Device Library</strong></td>
+<td>2.11.5</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_device/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Host Library</strong></td>
+<td>3.5.4</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_host/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations">Known limitations</h2>
+<p>None</p>
+<h2 id="development-toolchains-and-compilers">Development toolchains and
+compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) 9.20.1 + ST-LINKV3.</li>
+<li>STM32CubeIDE 2.1.0 + ST-LINKV3.</li>
+<li>Keil MDK-ARM 5.39 + ST-LINKV3.</li>
+</ul>
+<h2 id="supported-devices-and-boards">Supported devices and boards</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/stm32h573i-dk.html">STM32H573I-DK</a></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section3" aria-hidden="false">
+<label for="collapse-section3" aria-hidden="false"><strong>V2.0.0 /
+04-April-2025</strong></label>
+<div>
+<h2 id="main-changes-1">Main changes</h2>
+<ul>
+<li>Maintenance release of STM32H5 Classic Core Middleware package.</li>
+</ul>
+<h2 id="contents-1">Contents</h2>
+<h3 id="applications-1">Applications</h3>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr>
+<th>Application</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FatFs_RAMDISK_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/FatFs/FatFs_RAMDISK_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDPTCP_Echo_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDPTCP_Echo_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Socket_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Socket_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Raw</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Raw/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DFU_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/DFU_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_uSD_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_uSD_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_MultiAccess</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_MultiAccess/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TFTP_Server</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/LwIP/LwIP_TFTP_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Device/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DualClass_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Host/DualClass_Standalone/readme.html">readme</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares-1">Middlewares</h3>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>License</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FreeRTOS</strong></td>
+<td>V10.6.2</td>
+<td>MIT</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/readme.txt">release
+notes</a> ST modified 20241011 <a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>FatFS</strong></td>
+<td>R0.15</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/documents/updates.html">release
+notes</a> ST modified 20241220 <a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>LwIP</strong></td>
+<td>2.2.0</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/CHANGELOG">release
+notes</a> ST modified 20250106 <a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Device Library</strong></td>
+<td>2.11.3</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_device/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Host Library</strong></td>
+<td>3.5.3</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_host/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-1">Known limitations</h2>
+<p>None</p>
+<h2 id="development-toolchains-and-compilers-1">Development toolchains
+and compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) 9.20.4 + ST-LINKV3.</li>
+<li>STM32CubeIDE 1.17.0 + ST-LINKV3.</li>
+<li>Keil MDK-ARM 5.39 + ST-LINKV3.</li>
+</ul>
+<h2 id="supported-devices-and-boards-1">Supported devices and
+boards</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/stm32h573i-dk.html">STM32H573I-DK</a></li>
+</ul>
+<h2 id="dependencies-1">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section2" aria-hidden="false">
+<label for="collapse-section2" aria-hidden="false"><strong>V1.1.0 /
+27-January-2025</strong></label>
+<div>
+<h2 id="main-changes-2">Main changes</h2>
+<ul>
+<li>Maintenance release of STM32H5 Classic Core Middleware package.</li>
+<li>Add <strong>6 LwIP</strong> and <strong>4 USB</strong> Applications
+for NUCLEO-H563ZI board:
+<ul>
+<li>LwIP_UDPTCP_Echo_Server_Netconn_RTOS</li>
+<li>LwIP_UDP_Echo_Client</li>
+<li>LwIP_TCP_Echo_Client</li>
+<li>LwIP_HTTP_Server_Socket_RTOS</li>
+<li>LwIP_HTTP_Server_Netconn_RTOS</li>
+<li>LwIP_HTTP_Server_Raw</li>
+<li>USBD_DFU_Standalone</li>
+<li>USBD_CDC_Standalone</li>
+<li>USBH_MSC_Standalone</li>
+<li>USBH_CDC_Standalone</li>
+</ul></li>
+<li>Add <strong>2 FatFs</strong>, <strong>LwIP</strong> and <strong>2
+USB</strong> Applications for STM32H573I-DK board:
+<ul>
+<li>FatFs_uSD_Standalone</li>
+<li>FatFs_MultiAccess</li>
+<li>LwIP_TFTP_Server</li>
+<li>USBD_MSC_Standalone</li>
+<li>USBH_DualClass_Standalone</li>
+</ul></li>
+</ul>
+<h2 id="contents-2">Contents</h2>
+<h3 id="applications-2">Applications</h3>
+<table>
+<colgroup>
+<col style="width: 27%" />
+<col style="width: 72%" />
+</colgroup>
+<thead>
+<tr>
+<th>Application</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FatFs_RAMDISK_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/FatFs/FatFs_RAMDISK_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDPTCP_Echo_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDPTCP_Echo_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Client</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Client/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Socket_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Socket_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Raw</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Raw/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_HTTP_Server_Netconn_RTOS</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_HTTP_Server_Netconn_RTOS/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DFU_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/DFU_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>CDC_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/CDC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_uSD_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_uSD_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>FatFs_MultiAccess</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/FatFs/FatFs_MultiAccess/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TFTP_Server</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/LwIP/LwIP_TFTP_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>MSC_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Device/MSC_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>DualClass_Standalone</td>
+<td><a
+href="./Projects/STM32H573I-DK/Applications/USB_Host/DualClass_Standalone/readme.html">readme</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares-2">Middlewares</h3>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>License</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FreeRTOS</strong></td>
+<td>V10.6.2</td>
+<td>MIT</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/readme.txt">release
+notes</a> ST modified 20240818 <a
+href="https://github.com/STMicroelectronics/stm32-mw-freertos/tree/master/Source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>FatFS</strong></td>
+<td>R0.15</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/documents/updates.html">release
+notes</a> ST modified 20241213 <a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>LwIP</strong></td>
+<td>2.1.3</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/CHANGELOG">release
+notes</a> ST modified 20250106 <a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Device Library</strong></td>
+<td>2.11.3</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_device/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Host Library</strong></td>
+<td>3.5.3</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_host/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-2">Known limitations</h2>
+<p>None</p>
+<h2 id="development-toolchains-and-compilers-2">Development toolchains
+and compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) 9.20.1 + ST-LINKV3.</li>
+<li>STM32CubeIDE 1.17.0 + ST-LINKV3.</li>
+<li>Keil MDK-ARM 5.39 + ST-LINKV3.</li>
+</ul>
+<h2 id="supported-devices-and-boards-2">Supported devices and
+boards</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a></li>
+<li><a
+href="https://www.st.com/en/evaluation-tools/stm32h573i-dk.html">STM32H573I-DK</a></li>
+</ul>
+<h2 id="dependencies-2">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+<div class="collapse">
+<input type="checkbox" id="collapse-section1" aria-hidden="false">
+<label for="collapse-section1" aria-hidden="false"><strong>V1.0.0 /
+08-June-2023</strong></label>
+<div>
+<h2 id="main-changes-3">Main changes</h2>
+<ul>
+<li>First official release of the Classic Core Middleware package for
+STM32H5.</li>
+<li>Application examples for NUCLEO-H563ZI.</li>
+</ul>
+<h2 id="contents-3">Contents</h2>
+<h3 id="applications-3">Applications</h3>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr>
+<th>Application</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FatFs_RAMDISK_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/FatFs/FatFs_RAMDISK_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_UDP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_UDP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>LwIP_TCP_Echo_Server</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/LwIP/LwIP_TCP_Echo_Server/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Device/HID_Standalone/readme.html">readme</a></td>
+</tr>
+<tr>
+<td>HID_Standalone</td>
+<td><a
+href="./Projects/NUCLEO-H563ZI/Applications/USB_Host/HID_Standalone/readme.html">readme</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="middlewares-3">Middlewares</h3>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 80%" />
+</colgroup>
+<thead>
+<tr>
+<th>Name</th>
+<th>Version</th>
+<th>License</th>
+<th>Readme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FatFS</strong></td>
+<td>R0.12c</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/documents/updates.html">release
+notes</a> ST modified 20191011 <a
+href="https://github.com/STMicroelectronics/stm32-mw-fatfs/tree/master/source/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>LwIP</strong></td>
+<td>2.1.2</td>
+<td>BSD-3-Clause</td>
+<td><a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/CHANGELOG">release
+notes</a> ST modified 20190315 <a
+href="https://github.com/STMicroelectronics/stm32-mw-lwip/blob/master/st_readme.txt">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Device Library</strong></td>
+<td>2.11.1</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_device/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+<tr>
+<td><strong>STM32 USB Host Library</strong></td>
+<td>3.5.0</td>
+<td>SLA0044</td>
+<td><a
+href="https://htmlpreview.github.io/?https://github.com/STMicroelectronics/stm32_mw_usb_host/blob/master/Release_Notes.html">release
+notes</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-limitations-3">Known limitations</h2>
+<p>None</p>
+<h2 id="development-toolchains-and-compilers-3">Development toolchains
+and compilers</h2>
+<ul>
+<li>IAR Embedded Workbench for ARM (EWARM) 9.20.1 + ST-LINKV3.</li>
+<li>STM32CubeIDE 1.12.0 + ST-LINKV3.</li>
+<li>Keil MDK-ARM 5.37 + ST-LINKV3.</li>
+</ul>
+<h2 id="supported-devices-and-boards-3">Supported devices and
+boards</h2>
+<ul>
+<li><a
+href="https://www.st.com/en/evaluation-tools/nucleo-h563zi.html">NUCLEO-H563ZI</a></li>
+</ul>
+<h2 id="dependencies-3">Dependencies</h2>
+<p>None</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

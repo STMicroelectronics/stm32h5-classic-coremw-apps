@@ -77,6 +77,11 @@ void udp_echoserver_init(void)
 void udp_echoserver_receive_callback(void *arg, struct udp_pcb *upcb, struct pbuf *p, const ip_addr_t *addr, u16_t port)
 {
   struct pbuf *p_tx;
+  char   data[100] = {'\0'};
+
+  /* print received data */
+  strncpy(data, p->payload, p->len);
+  printf("%s \n", data);
 
   /* allocate pbuf from RAM*/
   p_tx = pbuf_alloc(PBUF_TRANSPORT,p->len, PBUF_RAM);

@@ -112,5 +112,6 @@ Connectivity, LwIP, Ethernet, TCP/IP, DHCP, echo Client, UART,
 In order to make the program work, you must do the following :
 
  - Open your preferred toolchain
+ - Edit the file <code> Core/Inc/main.h</code> and correctly define the <DEST_IP_ADDRx> to connect on.
  - Rebuild all files and load your image into target memory
  - Run the application

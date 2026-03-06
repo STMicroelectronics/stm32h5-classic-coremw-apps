@@ -29,6 +29,7 @@ extern "C" {
 #if defined(_RTOS)
 #include "cmsis_os.h"
 #if (osCMSIS >= 0x20000U)
+#include "FreeRTOS.h"
 #include "task.h"
 #endif /* osCMSIS >= 0x20000U */
 #else
@@ -75,8 +76,8 @@ extern "C" {
 #if defined(USBPD_THREADX)
 
 #define OS_INIT()                                        \
-    USBPD_memory_pool = (TX_BYTE_POOL*)MemoryPtr;        \
-    uint32_t _retr = TX_SUCCESS;
+  USBPD_memory_pool = (TX_BYTE_POOL*)MemoryPtr;          \
+  uint32_t _retr = TX_SUCCESS;
 
 #else
 
@@ -91,9 +92,13 @@ extern "C" {
 
 #define OS_QUEUE_ID TX_QUEUE
 
-#else
+#elif (osCMSIS < 0x20000U)
 
 #define OS_QUEUE_ID osMessageQId
+
+#else
+
+#define OS_QUEUE_ID osMessageQueueId_t
 
 #endif /* USBPD_THREADX */
 
@@ -116,7 +121,8 @@ extern "C" {
 #if defined(USBPD_THREADX)
 
 #define OS_CREATE_QUEUE(_ID_,_NAME_, _ELT_,_ELTSIZE_)                                                         \
-  do{                                                                                                         \
+  do                                                                                                          \
+  {                                                                                                           \
     char *ptr;                                                                                                \
     _retr = tx_byte_allocate(USBPD_memory_pool, (VOID **) &ptr,(_ELT_)*sizeof(ULONG)*(_ELTSIZE_),TX_NO_WAIT); \
     if(_retr != TX_SUCCESS)                                                                                   \
@@ -134,23 +140,25 @@ extern "C" {
 
 #if (osCMSIS < 0x20000U)
 
-#define OS_CREATE_QUEUE(_ID_,_NAME_,_ELT_,_ELTSIZE_)        \
-  do {                                                      \
-       osMessageQDef(queuetmp, (_ELT_), (_ELTSIZE_));       \
-       (_ID_) = osMessageCreate(osMessageQ(queuetmp), NULL);\
-       if((_ID_) == 0)                                      \
-       {                                                    \
-         _retr = USBPD_ERROR;                               \
-         goto error;                                        \
-       }                                                    \
+#define OS_CREATE_QUEUE(_ID_,_NAME_,_ELT_,_ELTSIZE_)     \
+  do                                                     \
+  {                                                      \
+    osMessageQDef(queuetmp, (_ELT_), (_ELTSIZE_));       \
+    (_ID_) = osMessageCreate(osMessageQ(queuetmp), NULL);\
+    if((_ID_) == 0)                                      \
+    {                                                    \
+      _retr = USBPD_ERROR;                               \
+      goto error;                                        \
+    }                                                    \
   } while(0)
 
 #else
 
-#define OS_CREATE_QUEUE(_ID_,_NAME_,_ELT_,_ELTSIZE_)         \
-  do {                                                       \
-       (_ID_) = osMessageQueueNew((_ELT_),(_ELTSIZE_), NULL);\
-  }while(0)
+#define OS_CREATE_QUEUE(_ID_,_NAME_,_ELT_,_ELTSIZE_)      \
+  do                                                      \
+  {                                                       \
+    (_ID_) = osMessageQueueNew((_ELT_),(_ELTSIZE_), NULL);\
+  } while(0)
 
 #endif /* osCMSIS < 0x20000U */
 #endif /* USBPD_THREADX */
@@ -161,7 +169,8 @@ extern "C" {
 #if defined(USBPD_THREADX)
 
 #define OS_GETMESSAGE_QUEUE(_ID_, _TIME_)                                      \
-  do {                                                                         \
+  do                                                                           \
+  {                                                                            \
     ULONG value;                                                               \
     tx_queue_receive(&(_ID_), (void*)&value, (_TIME_));                        \
   } while(0)
@@ -173,10 +182,11 @@ extern "C" {
 
 #else
 
-#define OS_GETMESSAGE_QUEUE(_ID_, _TIME_)                   \
-  do {                                                      \
-       uint32_t event;                                      \
-       (void)osMessageQueueGet((_ID_),&event,NULL,(_TIME_));\
+#define OS_GETMESSAGE_QUEUE(_ID_, _TIME_)                \
+  do                                                     \
+  {                                                      \
+    uint32_t event;                                      \
+    (void)osMessageQueueGet((_ID_),&event,NULL,(_TIME_));\
   } while(0)
 
 #endif /* osCMSIS < 0x20000U */
@@ -187,23 +197,26 @@ extern "C" {
   */
 #if defined(USBPD_THREADX)
 
-#define OS_PUT_MESSAGE_QUEUE(_ID_,_MSG_,_TIMEOUT_)                               \
-  do{                                                                            \
-    ULONG _msg = _MSG_;                                                          \
-    (void)tx_queue_send(&(_ID_), &_msg,(_TIMEOUT_));                             \
-  }while(0)
+#define OS_PUT_MESSAGE_QUEUE(_ID_,_MSG_,_TIMEOUT_)   \
+  do                                                 \
+  {                                                  \
+    ULONG _msg = _MSG_;                              \
+    (void)tx_queue_send(&(_ID_), &_msg,(_TIMEOUT_)); \
+  } while(0)
 #else
 
 #if (osCMSIS < 0x20000U)
 #define OS_PUT_MESSAGE_QUEUE(_ID_,_MSG_,_TIMEOUT_)   \
-  do{                                                \
-      (void)osMessagePut((_ID_),(_MSG_),(_TIMEOUT_));\
-  }while(0)
+  do                                                 \
+  {                                                  \
+    (void)osMessagePut((_ID_),(_MSG_),(_TIMEOUT_));  \
+  } while(0)
 #else
 #define OS_PUT_MESSAGE_QUEUE(_ID_,_MSG_,_TIMEOUT_)             \
-  do {                                                         \
-       uint32_t event = (_MSG_);                               \
-       (void)osMessageQueuePut((_ID_), &event, 0U,(_TIMEOUT_));\
+  do                                                           \
+  {                                                            \
+    uint32_t event = (_MSG_);                                  \
+    (void)osMessageQueuePut((_ID_), &event, 0U,(_TIMEOUT_));   \
   } while(0)
 #endif /* osCMSIS < 0x20000U */
 #endif /* USBPD_THREADX */
@@ -231,9 +244,14 @@ extern "C" {
 #if defined(USBPD_THREADX)
 
 #define OS_TASK_ID   TX_THREAD
-#else
+
+#elif (osCMSIS < 0x20000U)
 
 #define OS_TASK_ID   osThreadId
+
+#else
+
+#define OS_TASK_ID   osThreadId_t
 #endif /* USBPD_THREADX */
 
 /**
@@ -242,7 +260,8 @@ extern "C" {
 #if defined(USBPD_THREADX)
 
 #define OS_CREATE_TASK(_ID_,_NAME_,_FUNC_,_PRIORITY_,_STACK_SIZE_, _PARAM_)                  \
-  do {                                                                                       \
+  do                                                                                         \
+  {                                                                                          \
     char *ptr;                                                                               \
     _retr = tx_byte_allocate(USBPD_memory_pool, (VOID **)&ptr,(_STACK_SIZE_),TX_NO_WAIT);    \
     if(_retr != TX_SUCCESS)                                                                  \
@@ -250,9 +269,9 @@ extern "C" {
       goto error;                                                                            \
     }                                                                                        \
     _retr = tx_thread_create(&(_ID_),#_NAME_,(_FUNC_), (int)_PARAM_,                         \
-                         ptr,(_STACK_SIZE_),                                                 \
-                         _PRIORITY_, 1, TX_NO_TIME_SLICE,                                    \
-                         TX_AUTO_START);                                                     \
+                             ptr,(_STACK_SIZE_),                                             \
+                             _PRIORITY_, 1, TX_NO_TIME_SLICE,                                \
+                             TX_AUTO_START);                                                 \
     if(_retr != TX_SUCCESS)                                                                  \
     {                                                                                        \
       goto error;                                                                            \
@@ -263,32 +282,29 @@ extern "C" {
 #if (osCMSIS < 0x20000U)
 
 #define OS_CREATE_TASK(_ID_,_NAME_,_FUNC_,_PRIORITY_,_STACK_SIZE_, _PARAM_) \
-  do {                                                           \
-    osThreadDef(_NAME_, _FUNC_, _PRIORITY_, 0, _STACK_SIZE_);    \
-    (_ID_) = osThreadCreate(osThread(_NAME_), (void *)(_PARAM_));\
-    if (NULL == (_ID_))                                          \
-    {                                                            \
-      _retr = USBPD_ERROR;                                       \
-      goto error;                                                \
-    }                                                            \
+  do                                                                        \
+  {                                                                         \
+    osThreadDef(_NAME_, _FUNC_, _PRIORITY_, 0, _STACK_SIZE_);               \
+    (_ID_) = osThreadCreate(osThread(_NAME_), (void *)(_PARAM_));           \
+    if (NULL == (_ID_))                                                     \
+    {                                                                       \
+      _retr = USBPD_ERROR;                                                  \
+      goto error;                                                           \
+    }                                                                       \
   } while(0)
 #else
 
 #define OS_CREATE_TASK(_ID_,_NAME_,_FUNC_,_PRIORITY_,_STACK_SIZE_, _PARAM_) \
-  do {                                                 \
-    osThreadAttr_t Thread_Atrr =                       \
-    {                                                  \
-      .name       = #_NAME_,                           \
-      .priority   = (_PRIORITY_),                      \
-      .stack_size = (_STACK_SIZE_)                     \
-    };                                                 \
-    (_ID_) = osThreadNew(_FUNC_, (void *)(_PARAM_),    \
-                         &Thread_Atrr);                \
-    if (NULL == (_ID_))                                \
-    {                                                  \
-      _retr = USBPD_ERROR;                             \
-      goto error;                                      \
-    }                                                  \
+  do                                                                        \
+  {                                                                         \
+    osThreadAttr_t Thread_Atrr = {.name = #_NAME_, .priority = (_PRIORITY_), .stack_size = (_STACK_SIZE_)};\
+    (_ID_) = osThreadNew(_FUNC_, (void *)(_PARAM_),                         \
+                         &Thread_Atrr);                                     \
+    if (NULL == (_ID_))                                                     \
+    {                                                                       \
+      _retr = USBPD_ERROR;                                                  \
+      goto error;                                                           \
+    }                                                                       \
   } while(0)
 #endif /* osCMSIS < 0x20000U */
 #endif /* USBPD_THREADX */
@@ -369,9 +385,12 @@ extern "C" {
 #define OS_KERNEL_START() /* This function is not managed at usbpd level in the case of threadX */
 #else
 #if (osCMSIS >= 0x20000U)
-#define OS_KERNEL_START()  do { (void)osKernelInitialize(); \
-                                (void)osKernelStart();      \
-                              } while(0)
+#define OS_KERNEL_START()       \
+  do                            \
+  {                             \
+    (void)osKernelInitialize(); \
+    (void)osKernelStart();      \
+  } while(0)
 #else
 #define OS_KERNEL_START()  (void)osKernelStart()
 #endif /* osCMSIS >= 0x20000U */
@@ -393,5 +412,5 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-#endif /* USBPD_CORE_OSPORT_H_ */
 
+#endif /* USBPD_CORE_OSPORT_H_ */

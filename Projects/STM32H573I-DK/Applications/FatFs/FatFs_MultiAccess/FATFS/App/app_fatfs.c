@@ -58,7 +58,7 @@ osThreadId_t ConcurrentThreadHandle;
 static osThreadAttr_t uSDThread_attributes = {
   .name = "uSDThread",
   .priority = osPriorityNormal,
-  .stack_size = 512,
+  .stack_size = 1024,
 };
 static uint32_t   DiskQueueMsg = 0;
 osMessageQueueId_t DiskEvent;

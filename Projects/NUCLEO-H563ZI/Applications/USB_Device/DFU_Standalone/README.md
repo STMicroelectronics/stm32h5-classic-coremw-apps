@@ -1,8 +1,7 @@
-## <b>Application Description</b>
+## <b> DFU_Standalone Application Description</b>
 
 Compliant implementation of the Device Firmware Upgrade (DFU)
 capability to program the embedded Flash memory through the USB peripheral.
-
 
 At the beginning of the main program the HAL_Init() function is called to reset all the peripherals,
 initialize the Flash interface and the systick. The user is provided with the SystemClock_Config() function

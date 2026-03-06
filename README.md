@@ -2,7 +2,7 @@
 
 ![latest tag](https://img.shields.io/github/v/tag/STMicroelectronics/stm32h5-classic-coremw-apps.svg?color=brightgreen)
 
-![freertos](https://img.shields.io/badge/freertos-v10.6.2-blue.svg) ![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.3-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.3-blue.svg) ![lwip](https://img.shields.io/badge/lwip-v2.2.0-blue.svg)
+![freertos](https://img.shields.io/badge/freertos-v11.2.0-blue.svg) ![fatfs](https://img.shields.io/badge/fatfs-v0.15-blue.svg) ![usb_device](https://img.shields.io/badge/usb_device-v2.11.5-blue.svg) ![usb_host](https://img.shields.io/badge/usb_host-v3.5.4-blue.svg) ![lwip](https://img.shields.io/badge/lwip-v2.2.1-blue.svg)
 
 ## Description
 
@@ -64,9 +64,9 @@ LwIP          | LwIP_TFTP_Server                       | This application guides
 
 ## Development Toolchains and Compilers
 
- * IAR Embedded Workbench for ARM (EWARM) toolchain **9.20.4** + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM)
+ * IAR Embedded Workbench for ARM (EWARM) toolchain **9.20.1** + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/EWARM)
  * RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.39 + ST-LINKV3.Patch available [here](https://github.com/STMicroelectronics/STM32CubeH5/tree/main/Utilities/PC_Software/IDEs_Patches/MDK-ARM)
- * [STM32CubeIDE **V1.17.0**](https://www.st.com/en/development-tools/stm32cubeide.html) + ST-LINKV3
+ * [STM32CubeIDE **V2.1.0**](https://www.st.com/en/development-tools/stm32cubeide.html) + ST-LINKV3
 
 
 
@@ -76,21 +76,21 @@ This package has been developed and tested using the list of components detailed
 
 Name                       |   Version
 ---------------------------|---------------
-Cortex-M CMSIS             |   V5.9.0
-STM32H5xx CMSIS            |   V1.4.0
-STM32H5xx HAL              |   V1.5.0
-BSP STM32H5xx NUCLEO       |   V1.1.1
+Cortex-M CMSIS             |   v5.9.0_fix_620_dsp_v1.10.0_nn_v3.1.0_no_doc
+STM32H5xx CMSIS            |   V1.6.0
+STM32H5xx HAL              |   V1.6.0
+BSP STM32H5xx NUCLEO       |   V1.2.0
 BSP STM32H573I-DK          |   V1.1.0
 BSP Common                 |   V7.3.0
 BSP lan8742                |   V1.0.4
 BSP tcpp0203               |   V1.2.3
-FreeRTOS                   |   V10.6.2
+FreeRTOS                   |   V11.2.0
 FatFS                      |   R0.15
-LwIP                       |   V2.2.0
-STM32 USB Device Library   |   V2.11.3
-STM32 USB Host Library     |   V3.5.3
-STM32 USBPD Core Library   |   V4.1.1
-STM32 USBPD Device Library |   H5_V1.3.0
+LwIP                       |   V2.2.1
+STM32 USB Device Library   |   V2.11.5
+STM32 USB Host Library     |   V3.5.4
+STM32 USBPD Core Library   |   V5.3.1
+STM32 USBPD Device Library |   H5_V1.3.1
 
 ## How to use
 

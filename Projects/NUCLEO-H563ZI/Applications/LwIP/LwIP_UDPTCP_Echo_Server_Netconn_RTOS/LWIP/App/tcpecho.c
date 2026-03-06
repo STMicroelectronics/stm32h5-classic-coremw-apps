@@ -19,7 +19,7 @@
 #include "tcpecho.h"
 #include "lwip/opt.h"
 #include "FreeRTOS.h"
-
+#include <string.h>
 
 
 #if LWIP_NETCONN
@@ -40,6 +40,7 @@ static void tcpecho_thread(void *arg)
   struct netconn *conn, *newconn;
   err_t err;
   LWIP_UNUSED_ARG(arg);
+  char buffer[100] = {'\0'};
 
   /* Create a new connection identifier. */
   /* Bind connection to well known port number 7. */
@@ -65,6 +66,10 @@ static void tcpecho_thread(void *arg)
 
       while ((err = netconn_recv(newconn, &buf)) == ERR_OK) {
         do {
+             /* Print received data */
+             strncpy(buffer, buf->p->payload, buf->p->len);
+             printf("%s \n", buffer);
+
              netbuf_data(buf, &data, &len);
              err = netconn_write(newconn, data, len, NETCONN_COPY);
         } while (netbuf_next(buf) >= 0);
@@ -79,7 +84,7 @@ static void tcpecho_thread(void *arg)
 /*-----------------------------------------------------------------------------------*/
 void tcpecho_init(void)
 {
-  sys_thread_new("tcpecho_thread", tcpecho_thread, NULL, (configMINIMAL_STACK_SIZE * 9), TCPECHO_THREAD_PRIO);
+  sys_thread_new("tcpecho_thread", tcpecho_thread, NULL, (configMINIMAL_STACK_SIZE * 12), TCPECHO_THREAD_PRIO);
 }
 /*-----------------------------------------------------------------------------------*/
 
